@@ -1,0 +1,5 @@
+#site
+		
+div b{class:'main'};
+		
+b.output('It\'s site...', class = 'text');
