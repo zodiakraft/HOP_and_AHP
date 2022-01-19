@@ -51,6 +51,7 @@
 
 
 import os
+from os.path import abspath
 import sys
 
 from PyQt5 import QtWidgets, QtCore, QtGui
@@ -63,7 +64,6 @@ QLineEdit, QLabel, QDoubleSpinBox, QAbstractItemView, QStatusBar, qApp, QMenu,
 QMessageBox)
 from PyQt5.QtCore import QCoreApplication, Qt, QSize, right
 
-
 HTML_LINE_HEAD = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"' \
 + ' "http://www.w3.org/TR/REC-html40/strict.dtd">' \
 + '<html><head><meta name="qrichtext" content="1" /><style type="text/css">' \
@@ -72,12 +72,14 @@ HTML_LINE_HEAD = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"' \
 + ' font-size:8.25pt; font-weight:400; font-style:normal;">'
 HTML_LINE_FOOT = '</body></html>'
 
-directory = 'C:\\Users\\Professional\\Downloads\\neon'
+directory = abspath(__file__)
 file_name = 'first_program.nep'
 
 codes = []
 number_lines_of_code = 0
 
+SHELL_TEXT_CONST = 'Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32\nType "help", "copyright", "credits" or "license()" for more information.\n>>> '
+shell_text = SHELL_TEXT_CONST
 
 def center_the_window(class_name):
 
@@ -165,11 +167,10 @@ class MainWindowShell(QMainWindow):
         self.init_UI()
 
     def init_UI(self):
-        self.resize(667, 681)
+        self.resize(670, 680)
         center_the_window(self)
         self.setWindowTitle('Neon 1.0.0 Shell')
-        self.setWindowIcon(QIcon(
-            'C:\\Users\\zodia\\OneDrive\\Рабочий стол\\neon\\icon_Neon_IDE.png'))
+        self.setWindowIcon(QIcon(directory.replace('neon.py', 'icon_Neon_IDE.png')))
         #self.text.cursorPositionChanged.connect(self.process_click)
 
 
@@ -223,9 +224,25 @@ class Shell(QWidget):
         #self.faq = self.menu.addMenu('Справка')
         #self.faq.addAction(self.exitAction)
 
-        self.lines = QTextBrowser()
+        self.lines = QTextEdit()
+        self.lines.setText(SHELL_TEXT_CONST)
+        self.lines.textChanged.connect(self.set_text_for_shell)
+        self.checking_cursor
         self.layout.addWidget(self.lines, 1, 0)
         #self.lines.textChanged.connect(self.compiling)
+    
+    def set_text_for_shell(self):
+        shell_text = self.lines.toPlainText()
+        if SHELL_TEXT_CONST not in shell_text:
+            self.lines.setText(SHELL_TEXT_CONST)
+            self.checking_cursor
+    
+    def checking_cursor(self):
+        self.cursor = self.lines.textCursor()
+        self.cursor.setPosition(len(shell_text) + 1)
+        #self.cursor.setPosition(len(shell_text), QtGui.QTextCursor.KeepAnchor)
+        self.lines.setTextCursor(self.cursor)
+
 
 #    def interpret_the_code(self):
 #        pass
@@ -250,10 +267,10 @@ class MainWindowCompile(QMainWindow):
         self.init_UI()
 
     def init_UI(self):
-        self.resize(667, 681)
+        self.resize(670, 680)
         center_the_window(self)
         self.setWindowTitle(file_name + ' - ' + directory + ' (1.0.0)')
-        self.setWindowIcon(QIcon('C:\\Users\\zodia\\OneDrive\\Рабочий стол\\neon\\icon_Neon_IDE.png'))
+        self.setWindowIcon(QIcon(directory.replace('neon.py', 'icon_Neon_IDE.png')))
         #self.text.cursorPositionChanged.connect(self.process_click)
         self.statusbar = self.statusBar()
         # Adding a temporary message
@@ -299,7 +316,7 @@ class Compile(QWidget):
         self.openAction = QAction('Открыть файл', self)
         self.openAction.setShortcut('Ctrl+O')
         self.openAction.setStatusTip('Open file')
-        self.openAction.triggered.connect(lambda x: open_file(self))
+        self.openAction.triggered.connect(lambda: open_file(self))
 
         self.exitAction = QAction('Запустить отладку', self)
         self.exitAction.setShortcut('F5')
@@ -334,7 +351,7 @@ class Compile(QWidget):
         self.text.installEventFilter(self)
         self.text.setLineWrapMode(QTextEdit.NoWrap)
         self.text.setFocus()
-        self.text.setText(self.print_code('C:\\Users\\Professional\\Downloads\\neon\\first_program.nep'))
+        lambda: open_file(self)
 
         self.text.cursorPositionChanged.connect(self.parent.setting)
 
