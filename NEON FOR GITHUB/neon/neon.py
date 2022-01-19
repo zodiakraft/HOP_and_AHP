@@ -51,6 +51,7 @@
 
 
 import os
+import time
 from os.path import abspath
 import sys
 
@@ -248,14 +249,23 @@ class Shell(QWidget):
         if SHELL_PLAIN_TEXT not in shell_text:
             self.lines.setText(SHELL_TEXT_CONST)
             self.checking_cursor()
-        elif len(shell_text) >= 1 and shell_text[-1] == '''
+        if len(shell_text) >= 1 and shell_text[-1] == '''
 ''':
-            pass
-            SHELL_TEXT_CONST += '''<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;"''' + (shell_text.replace(SHELL_PLAIN_TEXT, '')) + '''</span></p>'''
+            #pass
+            print(shell_text[:-1].replace(SHELL_PLAIN_TEXT, ''))
+            SHELL_TEXT_CONST = SHELL_TEXT_CONST[:-11] + (shell_text[:-1].replace(SHELL_PLAIN_TEXT, '')) + '''</span></p>'''
             SHELL_PLAIN_TEXT = shell_text
+            self.layout.removeWidget(self.lines)
+            self.lines.deleteLater()
+            self.lines = QTextEdit()
             self.lines.setText(SHELL_TEXT_CONST)
+            print(SHELL_TEXT_CONST)
+            self.layout.addWidget(self.lines, 1, 0)
+            self.lines.textChanged.connect(self.set_text_for_shell)
+        self.checking_cursor()
 
     def checking_cursor(self):
+        shell_text = self.lines.toPlainText()
         self.cursor = self.lines.textCursor()
         self.cursor.setPosition(len(shell_text))
         #self.cursor.setPosition(len(shell_text), QtGui.QTextCursor.KeepAnchor)
