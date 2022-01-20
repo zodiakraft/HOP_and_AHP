@@ -79,7 +79,7 @@ file_name = 'first_program.nep'
 codes = []
 number_lines_of_code = 0
 
-SHELL_TEXT_CONST = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+shell_text_const = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
 </style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
@@ -87,11 +87,11 @@ p, li { white-space: pre-wrap; }
 <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Type "help", "copyright", "credits" or "license()" for more information.</span></p>
 <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">>>> </span></p>'''
 
-SHELL_PLAIN_TEXT = '''Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32
+shell_plain_text = '''Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license()" for more information.
 >>> '''
 
-shell_text = SHELL_PLAIN_TEXT
+shell_text = shell_plain_text
 
 def center_the_window(class_name):
 
@@ -206,6 +206,17 @@ class Shell(QWidget):
         super().__init__()
         super(Shell, self).__init__(parent)
         self.parent = parent
+        self.shell_plain_text = '''Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32
+        Type "help", "copyright", "credits" or "license()" for more information.
+        >>> '''
+        self.shell_text_const = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head><meta name="qrichtext" content="1" /><style type="text/css">
+p, li { white-space: pre-wrap; }
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Type "help", "copyright", "credits" or "license()" for more information.</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">>>> </span></p>'''
+        self.shell_text = ''
         self.initUI()
 
     def initUI(self):
@@ -237,37 +248,36 @@ class Shell(QWidget):
         #self.faq.addAction(self.exitAction)
 
         self.lines = QTextEdit()
-        self.lines.setText(SHELL_TEXT_CONST)
+        self.lines.setText(self.shell_text_const)
         self.lines.textChanged.connect(self.set_text_for_shell)
         self.layout.addWidget(self.lines, 1, 0)
         #self.lines.textChanged.connect(self.compiling)
         self.checking_cursor()
 
     def set_text_for_shell(self):
-        global SHELL_PLAIN_TEXT, SHELL_TEXT_CONST
-        shell_text = self.lines.toPlainText()
-        if SHELL_PLAIN_TEXT not in shell_text:
-            self.lines.setText(SHELL_TEXT_CONST)
+        self.shell_text = self.lines.toPlainText()
+        if self.shell_plain_text not in self.shell_text:
+            self.lines.setText(self.shell_text_const)
             self.checking_cursor()
-        if len(shell_text) >= 1 and shell_text[-1] == '''
+        if len(self.shell_text) >= 1 and shell_text[-1] == '''
 ''':
             #pass
-            print(shell_text[:-1].replace(SHELL_PLAIN_TEXT, ''))
-            SHELL_TEXT_CONST = SHELL_TEXT_CONST[:-11] + (shell_text[:-1].replace(SHELL_PLAIN_TEXT, '')) + '''</span></p>'''
-            SHELL_PLAIN_TEXT = shell_text
-            self.layout.removeWidget(self.lines)
-            self.lines.deleteLater()
-            self.lines = QTextEdit()
-            self.lines.setText(SHELL_TEXT_CONST)
-            print(SHELL_TEXT_CONST)
-            self.layout.addWidget(self.lines, 1, 0)
-            self.lines.textChanged.connect(self.set_text_for_shell)
+            print(self.shell_text[:-1].replace(self.shell_plain_text, ''))
+            self.shell_text_const = self.shell_text_const[:-11] + (self.shell_text[:-1].replace(self.shell_plain_text, '')) + '''</span></p>'''
+            self.shell_plain_text = self.shell_text
+            #self.layout.removeWidget(self.lines)
+            #self.lines.deleteLater()
+            #self.lines = QTextEdit()
+            self.lines.blockSignals(True)
+            self.lines.setText(shell_text_const)
+            self.lines.blockSignals(False)
+            print(self.shell_text_const)
         self.checking_cursor()
 
     def checking_cursor(self):
-        shell_text = self.lines.toPlainText()
+        #self.shell_text = self.lines.toPlainText()
         self.cursor = self.lines.textCursor()
-        self.cursor.setPosition(len(shell_text))
+        self.cursor.setPosition(len(self.shell_text))
         #self.cursor.setPosition(len(shell_text), QtGui.QTextCursor.KeepAnchor)
         self.lines.setTextCursor(self.cursor)
 
