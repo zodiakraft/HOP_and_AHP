@@ -151,6 +151,25 @@ p, li { white-space: pre-wrap; }
     code.close()
 
 
+def compiling(code):
+    a = []
+    code = code.replace('(', ';').replace(')', ';').replace('\'', ';').replace('"', ';')
+    for i in code.split(';'):
+        a.append(i)
+    while True:
+        try:
+            a.remove('\n')
+        except:
+            try:
+                a.remove('')
+            except:
+                break
+
+    for i in range(len(a)):
+        if a[i] == 'output':
+            return a[i+1]
+
+
 #################################################################################################################################
 #███╗░░░███╗░█████╗░██╗███╗░░██╗░██╗░░░░░░░██╗██╗███╗░░██╗██████╗░░█████╗░░██╗░░░░░░░██╗░██████╗██╗░░██╗███████╗██╗░░░░░██╗░░░░░#
 #████╗░████║██╔══██╗██║████╗░██║░██║░░██╗░░██║██║████╗░██║██╔══██╗██╔══██╗░██║░░██╗░░██║██╔════╝██║░░██║██╔════╝██║░░░░░██║░░░░░#
@@ -242,7 +261,7 @@ p, li { white-space: pre-wrap; }
         self.lines.setText(self.shell_text_const)
         self.checking_cursor()
         self.lines.textChanged.connect(self.set_text_for_shell)
-        self.layout.addWidget(self.lines, 1, 0)
+        self.layout.addWidget(self.lines, 2, 0)
         #self.lines.textChanged.connect(self.compiling)
 
     def set_text_for_shell(self):
@@ -251,7 +270,7 @@ p, li { white-space: pre-wrap; }
             self.lines.blockSignals(True)
             self.lines.setText(self.shell_text_const)
             self.lines.blockSignals(False)
-        
+
         elif self.shell_text[-1] == '''
 ''':
             #print('FIRST' + self.shell_text_const[:-11] + 'END')
@@ -436,13 +455,23 @@ class Compile(QWidget):
         else:
             event.ignore()
 
+    def open_shell_to_compile(self):
+        main_window.activateWindow()
+        main_window.main_widget.lines.blockSignals(True)
+        main_window.main_widget.lines.setText(compiling(self.text.toPlainText()))
+        main_window.main_widget.lines.blockSignals(False)
+        #main_window.raise_()
+
     def compile_code(self):
-        
+
         try:
             main_window.activateWindow()
-            #main_window.raise_()
+            self.open_shell_to_compile()
         except:
-            self.create_window = MainWindowShell()
+            main_window = 0
+            main_window = MainWindowShell()
+            print(111111111111111111111111111111)
+            self.open_shell_to_compile()
         #self.create_window.compiling(self.text.toPlainText())
 
     def count_lines_code(self, stroke = 0):
