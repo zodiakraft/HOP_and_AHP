@@ -54,6 +54,7 @@ import os
 import time
 from os.path import abspath
 import sys
+from tkinter.messagebox import NO
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import QIcon, QFont,  QWindow,  QKeySequence
@@ -78,20 +79,6 @@ file_name = 'first_program.nep'
 
 codes = []
 number_lines_of_code = 0
-
-shell_text_const = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-<html><head><meta name="qrichtext" content="1" /><style type="text/css">
-p, li { white-space: pre-wrap; }
-</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
-<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32</span></p>
-<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Type "help", "copyright", "credits" or "license()" for more information.</span></p>
-<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">>>> </span></p>'''
-
-shell_plain_text = '''Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license()" for more information.
->>> '''
-
-shell_text = shell_plain_text
 
 def center_the_window(class_name):
 
@@ -137,7 +124,11 @@ def open_file(class_name):
     #self.setEnabled(False)
     #process.finished.connect(lambda: self.setEnabled(True))
 
+edit = None
+
 def print_code(direct):
+    global edit
+
     file_name = 'first_program.nep'
 
     code = open(direct,'r')
@@ -172,7 +163,7 @@ p, li { white-space: pre-wrap; }
 
 class MainWindowShell(QMainWindow):
 
-    def __init__(self, parent=None):
+    def __init__(self, parent = None):
         super().__init__()
         self.main_widget = Shell(self)
         self.setCentralWidget(self.main_widget)
@@ -207,8 +198,8 @@ class Shell(QWidget):
         super(Shell, self).__init__(parent)
         self.parent = parent
         self.shell_plain_text = '''Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32
-        Type "help", "copyright", "credits" or "license()" for more information.
-        >>> '''
+Type "help", "copyright", "credits" or "license()" for more information.
+>>> '''
         self.shell_text_const = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -216,7 +207,7 @@ p, li { white-space: pre-wrap; }
 <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Python 3.8.6 (tags/v3.8.6:db45529, Sep 23 2020, 15:52:53) [MSC v.1927 64 bit (AMD64)] on win32</span></p>
 <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">Type "help", "copyright", "credits" or "license()" for more information.</span></p>
 <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">>>> </span></p>'''
-        self.shell_text = ''
+        self.shell_text = self.shell_plain_text
         self.initUI()
 
     def initUI(self):
@@ -249,35 +240,40 @@ p, li { white-space: pre-wrap; }
 
         self.lines = QTextEdit()
         self.lines.setText(self.shell_text_const)
+        self.checking_cursor()
         self.lines.textChanged.connect(self.set_text_for_shell)
         self.layout.addWidget(self.lines, 1, 0)
         #self.lines.textChanged.connect(self.compiling)
-        self.checking_cursor()
 
     def set_text_for_shell(self):
         self.shell_text = self.lines.toPlainText()
         if self.shell_plain_text not in self.shell_text:
-            self.lines.setText(self.shell_text_const)
-            self.checking_cursor()
-        if len(self.shell_text) >= 1 and shell_text[-1] == '''
-''':
-            #pass
-            print(self.shell_text[:-1].replace(self.shell_plain_text, ''))
-            self.shell_text_const = self.shell_text_const[:-11] + (self.shell_text[:-1].replace(self.shell_plain_text, '')) + '''</span></p>'''
-            self.shell_plain_text = self.shell_text
-            #self.layout.removeWidget(self.lines)
-            #self.lines.deleteLater()
-            #self.lines = QTextEdit()
             self.lines.blockSignals(True)
-            self.lines.setText(shell_text_const)
+            self.lines.setText(self.shell_text_const)
             self.lines.blockSignals(False)
-            print(self.shell_text_const)
+        
+        elif self.shell_text[-1] == '''
+''':
+            #print('FIRST' + self.shell_text_const[:-11] + 'END')
+            #print('SECOND' + self.shell_text[:-1].replace(self.shell_plain_text, '') + 'END')
+            self.shell_text_const = self.shell_text_const[:-11] + (self.shell_text[:-1].replace(self.shell_plain_text, '')) + '''</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">>>> </span></p>'''
+            self.shell_plain_text = self.shell_text + '>>> '
+            self.shell_text += '''>>> '''
+            self.lines.blockSignals(True)
+            #print('THIRD' + self.shell_text_const + 'END')
+            self.lines.setText(self.shell_text_const)
+            self.lines.blockSignals(False)
+
+        #print(self.shell_text_const)
         self.checking_cursor()
 
     def checking_cursor(self):
+        self.shell_text = self.lines.toPlainText()
         #self.shell_text = self.lines.toPlainText()
         self.cursor = self.lines.textCursor()
         self.cursor.setPosition(len(self.shell_text))
+        #print(len(self.shell_text))
         #self.cursor.setPosition(len(shell_text), QtGui.QTextCursor.KeepAnchor)
         self.lines.setTextCursor(self.cursor)
 
@@ -349,7 +345,7 @@ class Compile(QWidget):
         self.runAction = QAction('Запустить отладку', self)
         self.runAction.setShortcut('F5')
         self.runAction.setStatusTip('Run file')
-        self.runAction.triggered.connect(self.open_file)
+        self.runAction.triggered.connect(self.compile_code)
 
         self.openAction = QAction('Открыть файл', self)
         self.openAction.setShortcut('Ctrl+O')
@@ -441,8 +437,12 @@ class Compile(QWidget):
             event.ignore()
 
     def compile_code(self):
-
-        self.create_window = MainWindowShell()
+        
+        try:
+            main_window.activateWindow()
+            #main_window.raise_()
+        except:
+            self.create_window = MainWindowShell()
         #self.create_window.compiling(self.text.toPlainText())
 
     def count_lines_code(self, stroke = 0):
