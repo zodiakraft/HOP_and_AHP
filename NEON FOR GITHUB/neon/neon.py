@@ -79,6 +79,8 @@ file_name = 'first_program.nep'
 
 codes = []
 number_lines_of_code = 0
+pet = False
+
 
 def center_the_window(class_name):
 
@@ -169,6 +171,36 @@ def compiling(code):
         if a[i] == 'output':
             return a[i+1]
 
+def openshell():
+    global main_window
+
+    main_window = MainWindowShell()
+    main_window.show()
+
+
+def open_shell_to_compile(text):
+
+    main_window.activateWindow()
+    print()
+    main_window.main_widget.lines.blockSignals(True)
+    main_window.main_widget.lines.setText(compiling(text))
+    main_window.main_widget.lines.blockSignals(False)
+    #main_window.raise_()
+
+def compile_code(text):
+
+    global main_window
+
+    try:
+        if pet == False:
+            main_window.activateWindow()
+            print(222222222222222222222)
+            open_shell_to_compile(text)
+        else: print(derf)
+    except:
+        main_window.setVisible (True)
+        open_shell_to_compile(text)
+    #self.create_window.compiling(self.text.toPlainText())
 
 #################################################################################################################################
 #███╗░░░███╗░█████╗░██╗███╗░░██╗░██╗░░░░░░░██╗██╗███╗░░██╗██████╗░░█████╗░░██╗░░░░░░░██╗░██████╗██╗░░██╗███████╗██╗░░░░░██╗░░░░░#
@@ -195,6 +227,18 @@ class MainWindowShell(QMainWindow):
         self.setWindowIcon(QIcon(directory.replace('neon.py', 'icon_Neon_IDE.png')))
         #self.text.cursorPositionChanged.connect(self.process_click)
 
+    def event(self, event):
+        global pet
+
+        if event.type() == QtCore.QEvent.WindowActivate:
+            print(f"Oкно стало активным; (WindowActivate).")
+        elif event.type() == QtCore.QEvent.WindowDeactivate:
+            print(f"Oкно стало НЕактивным; (WindowDeactivate).", QtWidgets.QWidget.event(self, event))
+        if event.type() == QtCore.QEvent.Close:
+            print(f"Oкно закрытo (QCloseEvent).")
+            pet = True
+
+        return QtWidgets.QWidget.event(self, event)
 
 ##########################################
 #░██████╗██╗░░██╗███████╗██╗░░░░░██╗░░░░░#
@@ -364,7 +408,7 @@ class Compile(QWidget):
         self.runAction = QAction('Запустить отладку', self)
         self.runAction.setShortcut('F5')
         self.runAction.setStatusTip('Run file')
-        self.runAction.triggered.connect(self.compile_code)
+        self.runAction.triggered.connect(self.dett)
 
         self.openAction = QAction('Открыть файл', self)
         self.openAction.setShortcut('Ctrl+O')
@@ -419,6 +463,9 @@ class Compile(QWidget):
 
         self.lines.setVerticalScrollBarPolicy(True)
 
+    def dett(self):
+        compile_code(self.text.toPlainText())
+
     def process_click(self, info = None):
         cursor = self.text.textCursor()
         self.cursor_position = cursor.blockNumber()
@@ -454,25 +501,6 @@ class Compile(QWidget):
             event.accept()
         else:
             event.ignore()
-
-    def open_shell_to_compile(self):
-        main_window.activateWindow()
-        main_window.main_widget.lines.blockSignals(True)
-        main_window.main_widget.lines.setText(compiling(self.text.toPlainText()))
-        main_window.main_widget.lines.blockSignals(False)
-        #main_window.raise_()
-
-    def compile_code(self):
-
-        try:
-            main_window.activateWindow()
-            self.open_shell_to_compile()
-        except:
-            main_window = 0
-            main_window = MainWindowShell()
-            print(111111111111111111111111111111)
-            self.open_shell_to_compile()
-        #self.create_window.compiling(self.text.toPlainText())
 
     def count_lines_code(self, stroke = 0):
         number_lines_of_code = len(self.text.toPlainText().splitlines())
@@ -530,6 +558,5 @@ p, li { white-space: pre-wrap; }
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-    main_window = MainWindowShell()
-    main_window.show()
+    openshell()
     sys.exit(app.exec_())
