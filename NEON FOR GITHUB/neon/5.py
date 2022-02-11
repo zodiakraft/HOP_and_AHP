@@ -7,7 +7,7 @@ for i in range(1000000):
             b += 1
         if a[j] == '1' and (j+1)%2 == 0:
             c += 1
-    
-    if int(b) - int(c) == -5 or int(b) - int(c) == 5:
+
+    if abs(int(b) - int(c)) == 5:
         print(i)
         break

@@ -49,9 +49,18 @@
 
         #filename = QFileDialog.getOpenFileName(self)
 
-
 import os
+clear = lambda: os.system('cls')
+
 import time
+start_time = time.time()
+
+log = []
+
+from prettytable import PrettyTable
+mytable = PrettyTable()
+log.append(mytable)
+
 from os.path import abspath
 import sys
 from tkinter.messagebox import NO
@@ -65,6 +74,29 @@ QGridLayout, QFileDialog, QListWidget, QSpacerItem, QSizePolicy, QTableWidget,
 QLineEdit, QLabel, QDoubleSpinBox, QAbstractItemView, QStatusBar, qApp, QMenu,
 QMessageBox)
 from PyQt5.QtCore import QCoreApplication, Qt, QSize, right
+from prettytable import PrettyTable
+import colorama
+from colorama import Fore, Back, Style
+
+colorama.init()
+
+GREEN_STATUS = Fore.GREEN + 'DONE' + Style.RESET_ALL
+YELLOW_STATUS = Fore.YELLOW + 'DONE' + Style.RESET_ALL
+RED_STATUS = Fore.RED + 'ERROR' + Style.RESET_ALL
+
+mytable.field_names = ['Operation', 'Time, sec', 'Status']
+
+def print_log():
+    clear()
+    for log_item in log:
+        print(log_item)
+
+def log_status(log_time):
+    status = lambda time: GREEN_STATUS if (time < 1) else YELLOW_STATUS
+    return status(log_time)
+
+mytable.add_row(["Import", (time.time() - start_time), log_status((time.time() - start_time))])
+print(print_log())
 
 HTML_LINE_HEAD = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"' \
 + ' "http://www.w3.org/TR/REC-html40/strict.dtd">' \
@@ -99,13 +131,13 @@ def process_click(class_name, info = None):
         return cursor.positionInBlock()
     #print(f'Стр {cursor.blockNumber()}, стлб {cursor.positionInBlock()}')
 
-def create_StatusBar(class_name = None, widget = None):
-    class_name.statusbar = class_name.statusBar()
-    # Adding a temporary message
-    class_name.statusbar.showMessage("Ready", 3000)
-    # Adding a permanent message
-    class_name.wcLabel = QLabel(f"{self.process_click(widget)} Words")
-    class_name.statusbar.addPermanentWidget(self.wcLabel)
+#def create_StatusBar(class_name = None, widget = None):
+#    class_name.statusbar = class_name.statusBar()
+#    # Adding a temporary message
+#    class_name.statusbar.showMessage("Ready", 3000)
+#    # Adding a permanent message
+#    class_name.wcLabel = QLabel(f"{self.process_click(widget)} Words")
+#    class_name.statusbar.addPermanentWidget(self.wcLabel)
 
 def open_file(class_name):
 
@@ -152,6 +184,19 @@ p, li { white-space: pre-wrap; }
 
     code.close()
 
+def new_code():
+    global edit
+
+    file_name = 'untitled.nep'
+
+    all_code = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head><meta name="qrichtext" content="1" /><style type="text/css">
+p, li { white-space: pre-wrap; }
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;"><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;"> </span></p></body></html>'''
+
+    edit = MainWindowCompile()
+    edit.show()
+    edit.main_widget.text.setText(all_code)
 
 def compiling(code):
     a = []
@@ -194,7 +239,6 @@ def compile_code(text):
     try:
         if pet == False:
             main_window.activateWindow()
-            print(222222222222222222222)
             open_shell_to_compile(text)
         else: print(derf)
     except:
@@ -225,7 +269,6 @@ class MainWindowShell(QMainWindow):
         center_the_window(self)
         self.setWindowTitle('Neon 1.0.0 Shell')
         self.setWindowIcon(QIcon(directory.replace('neon.py', 'icon_Neon_IDE.png')))
-        #self.text.cursorPositionChanged.connect(self.process_click)
 
     def event(self, event):
         global pet
@@ -282,7 +325,7 @@ p, li { white-space: pre-wrap; }
         self.newAction = QAction('Новый файл', self)
         self.newAction.setShortcut('Ctrl+N')
         self.newAction.setStatusTip('New file')
-        self.newAction.triggered.connect(lambda x: open_file(self)) #Сделать открытие диалогового окна на создание файла
+        self.newAction.triggered.connect(lambda x: new_code()) #Сделать открытие диалогового окна на создание файла
 
         self.openAction = QAction('Открыть файл', self)
         self.openAction.setShortcut('Ctrl+O')
@@ -368,17 +411,14 @@ class MainWindowCompile(QMainWindow):
         center_the_window(self)
         self.setWindowTitle(file_name + ' - ' + directory + ' (1.0.0)')
         self.setWindowIcon(QIcon(directory.replace('neon.py', 'icon_Neon_IDE.png')))
-        #self.text.cursorPositionChanged.connect(self.process_click)
         self.statusbar = self.statusBar()
-        # Adding a temporary message
         self.statusbar.showMessage("Ready", 3000)
-        # Adding a permself.wcLabel = QLabel(f"{self.main_widget.process_click()} Words")
         self.wcLabel = QLabel('Ln: 1   Col: 0')
         self.statusbar.addPermanentWidget(self.wcLabel)
 
     def setting(self):
         self.statusbar = self.statusBar()
-        self.wcLabel.setText(f"Ln: {self.main_widget.process_click(info = 'ln') + 1}   Col: {self.main_widget.process_click(info = 'col')}")
+        self.wcLabel.setText(f"Ln: {process_click(self.main_widget, info = 'ln') + 1}   Col: {process_click(self.main_widget, info = 'col')}")
 
 
 ########################################################
@@ -418,7 +458,7 @@ class Compile(QWidget):
         self.exitAction = QAction('Запустить отладку', self)
         self.exitAction.setShortcut('F5')
         self.exitAction.setStatusTip('Run file')
-        self.exitAction.triggered.connect(self.open_file) #compile_code
+        self.exitAction.triggered.connect(lambda: open_file(self)) #compile_code
 
         self.menu = QMenuBar()
         self.layout.addWidget(self.menu, 0, 0, 1, 2)
@@ -453,7 +493,7 @@ class Compile(QWidget):
         self.text.cursorPositionChanged.connect(self.parent.setting)
 
         self.count_lines_code()
-        self.text.textChanged.connect(lambda: self.count_lines_code(self.process_click(info = 'ln')))
+        self.text.textChanged.connect(lambda: self.count_lines_code(process_click(self, info = 'ln')))
 
         self.list_of_tables = [self.lines,self.text]
 
@@ -466,15 +506,7 @@ class Compile(QWidget):
     def dett(self):
         compile_code(self.text.toPlainText())
 
-    def process_click(self, info = None):
-        cursor = self.text.textCursor()
-        self.cursor_position = cursor.blockNumber()
-        self.count_lines_code(stroke = cursor.blockNumber())
-        print(f'Стр {cursor.blockNumber()}, стлб {cursor.positionInBlock()}')
-        if info == 'ln':
-            return cursor.blockNumber()
-        if info == 'col':
-            return cursor.positionInBlock()
+
 
     def move_other_scrollbars(self, idx, bar):
 
@@ -523,40 +555,10 @@ class Compile(QWidget):
 
         self.lines.setText(HTML_LINE_HEAD + html_body + '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">  </span></p>' + HTML_LINE_FOOT)
 
-    def open_file(self):
-
-        file, _ = QtWidgets.QFileDialog.getOpenFileName(self,
-                        'Открыть файл',
-                        './',
-                        'Neon Programs Files (*.nep)')
-        if not file:
-            return
-
-        self.print_code(file)
-
-    def print_code(self, direct):
-        file_name = 'first_program.nep'
-
-        code = open(direct,'r')
-        lines_code = code.readlines()
-        self.all_code = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-<html><head><meta name="qrichtext" content="1" /><style type="text/css">
-p, li { white-space: pre-wrap; }
-</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">'''
-
-        for i in lines_code:
-                if i == '\n':
-                    self.all_code = self.all_code + '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;"> </span></p>'
-                else:
-                    self.all_code = self.all_code + '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:\'Courier New\'; font-size:10pt;">' + i + '</span></p>'
-        self.all_code += '</body></html>'
-
-        code.close()
-        #self.edit = MainWindowCompile()
-        return self.all_code
-
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     openshell()
+    mytable.add_row(["Creating main window", (time.time() - start_time), log_status((time.time() - start_time))])
+    print(print_log())
     sys.exit(app.exec_())
