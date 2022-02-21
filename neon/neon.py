@@ -14,14 +14,12 @@
         #        else:
         #                print(all_code[1][fr0m:to])
 
-
         #files = os.listdir(directory)
 
         #for i in range(len(files)):
         #        if 'txt' in files[i]:
         #                files[i] = files[i].replace('txt', 'npf')
         #                codes.append(files[i])
-
 
     #def get_folder(self):
     #
@@ -38,7 +36,6 @@
     #            #print(len(self.text.toPlainText().splitlines()) + 1, self.text.textCursor().blockNumber() + 2)
     #    return super().eventFilter(obj, event)
 
-
         #process = QtCore.QProcess(self)
         #self.text.setText([file])
         #process.start('notepad', [file])
@@ -46,19 +43,22 @@
         #self.setEnabled(False)
         #process.finished.connect(lambda: self.setEnabled(True))
 
-
         #filename = QFileDialog.getOpenFileName(self)
 
-import os
-clear = lambda: os.system('cls')
 
 import time
 start_time = time.time()
 
-log = []
+import os
+clear = lambda: os.system('cls')
 
 from prettytable import PrettyTable
+
+log = []
+
 mytable = PrettyTable()
+mytable.field_names = ['Operation', 'Time, sec', 'Status']
+
 log.append(mytable)
 
 from os.path import abspath
@@ -82,9 +82,7 @@ colorama.init()
 
 GREEN_STATUS = Fore.GREEN + 'DONE' + Style.RESET_ALL
 YELLOW_STATUS = Fore.YELLOW + 'DONE' + Style.RESET_ALL
-RED_STATUS = Fore.RED + 'ERROR' + Style.RESET_ALL
-
-mytable.field_names = ['Operation', 'Time, sec', 'Status']
+RED_STATUS = Fore.RED + 'DONE' + Style.RESET_ALL
 
 def print_log():
     clear()
@@ -97,6 +95,7 @@ def log_status(log_time):
 
 mytable.add_row(["Import", (time.time() - start_time), log_status((time.time() - start_time))])
 print(print_log())
+start_time = time.time()
 
 HTML_LINE_HEAD = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"' \
 + ' "http://www.w3.org/TR/REC-html40/strict.dtd">' \
@@ -147,6 +146,8 @@ def open_file(class_name):
                     'Neon Programs Files (*.nep)')
     if not file:
         return
+
+    
 
     #filename = QFileDialog.getOpenFileName(self)
     print_code(file)
@@ -233,14 +234,12 @@ def open_shell_to_compile(text):
     #main_window.raise_()
 
 def compile_code(text):
-
     global main_window
 
     try:
         if pet == False:
             main_window.activateWindow()
             open_shell_to_compile(text)
-        else: print(derf)
     except:
         main_window.setVisible (True)
         open_shell_to_compile(text)
@@ -558,6 +557,9 @@ class Compile(QWidget):
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
+    mytable.add_row(["Code initialisation", (time.time() - start_time), log_status((time.time() - start_time))])
+    print(print_log())
+    start_time = time.time()
     openshell()
     mytable.add_row(["Creating main window", (time.time() - start_time), log_status((time.time() - start_time))])
     print(print_log())
