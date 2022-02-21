@@ -1,3 +1,8 @@
+# https://pythonworld.ru/moduli/modul-unittest.html
+# https://habr.com/ru/company/yandex/blog/336476/
+# https://dillinger.io/
+# https://nuancesprog.ru/p/7105/
+
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
@@ -87,14 +92,15 @@ RED_STATUS = Fore.RED + 'DONE' + Style.RESET_ALL
 def print_log():
     clear()
     for log_item in log:
-        print(log_item)
+        pass
+        #return1 print(log_item)
 
 def log_status(log_time):
     status = lambda time: GREEN_STATUS if (time < 1) else YELLOW_STATUS
     return status(log_time)
 
 mytable.add_row(["Import", (time.time() - start_time), log_status((time.time() - start_time))])
-print(print_log())
+#return1 print(print_log())
 start_time = time.time()
 
 HTML_LINE_HEAD = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"' \
@@ -147,7 +153,7 @@ def open_file(class_name):
     if not file:
         return
 
-    
+
 
     #filename = QFileDialog.getOpenFileName(self)
     print_code(file)
@@ -227,7 +233,7 @@ def openshell():
 def open_shell_to_compile(text):
 
     main_window.activateWindow()
-    print()
+    #return1 print()
     main_window.main_widget.lines.blockSignals(True)
     main_window.main_widget.lines.setText(compiling(text))
     main_window.main_widget.lines.blockSignals(False)
@@ -273,11 +279,13 @@ class MainWindowShell(QMainWindow):
         global pet
 
         if event.type() == QtCore.QEvent.WindowActivate:
-            print(f"Oкно стало активным; (WindowActivate).")
+            pass
+            #return1 print(f"Oкно стало активным; (WindowActivate).")
         elif event.type() == QtCore.QEvent.WindowDeactivate:
-            print(f"Oкно стало НЕактивным; (WindowDeactivate).", QtWidgets.QWidget.event(self, event))
+            pass
+            #return1 print(f"Oкно стало НЕактивным; (WindowDeactivate).", QtWidgets.QWidget.event(self, event))
         if event.type() == QtCore.QEvent.Close:
-            print(f"Oкно закрытo (QCloseEvent).")
+            #return1 print(f"Oкно закрытo (QCloseEvent).")
             pet = True
 
         return QtWidgets.QWidget.event(self, event)
@@ -540,11 +548,12 @@ class Compile(QWidget):
 ''':
                 number_lines_of_code += 1
         except:
-            print('all')
+            pass
+            #return1 print('all')
         self.print_numbers_stroke(number_lines_of_code, grey = stroke)
 
     def print_numbers_stroke(self, number, grey = -1):
-        print(number, grey)
+        #return1 print(number, grey)
         html_body = ''''''
         for i in range(number):
             if i == grey and grey != -1:
@@ -558,9 +567,9 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     mytable.add_row(["Code initialisation", (time.time() - start_time), log_status((time.time() - start_time))])
-    print(print_log())
+    #return1 print(print_log())
     start_time = time.time()
     openshell()
     mytable.add_row(["Creating main window", (time.time() - start_time), log_status((time.time() - start_time))])
-    print(print_log())
+    #return1 print(print_log())
     sys.exit(app.exec_())
