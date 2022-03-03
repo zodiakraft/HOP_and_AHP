@@ -1,0 +1,4 @@
+https://docs.microsoft.com/ru-ru/visualstudio/ide/using-regular-expressions-in-visual-studio?view=vs-2022
+https://habr.com/ru/post/152457/
+https://younglinux.info/pygame/key
+https://waksoft.susu.ru/2019/04/24/pygame-shpargalka-dlja-ispolzovanija/
