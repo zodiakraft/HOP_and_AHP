@@ -1,10 +1,45 @@
 import sys
 import pygame
 from random import randint
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow, QGridLayout
 from PyQt5.QtCore import QTimer, QSize, QPoint
-from PyQt5.QtGui import QImage, QPainter, QCursor
+from PyQt5.QtGui import QImage, QPainter, QCursor, QPainterPath
+
+class GraphicsView(QtWidgets.QGraphicsView):                                    # +++
+    def __init__(self, parent=None):
+        super(GraphicsView, self).__init__(parent)
+        self.setScene(QtWidgets.QGraphicsScene(self))
+        self.resize(1000, 600)
+
+        self.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
+        self.setResizeAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
+        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.setBackgroundBrush(QtGui.QBrush(QtGui.QColor(30, 30, 30)))
+        self.setFrameShape(QtWidgets.QFrame.NoFrame)
+
+    def wheelEvent(self, event):
+        """ Увеличение или уменьшение масштаба. """
+        zoomInFactor = 1.25
+        zoomOutFactor = 1 / zoomInFactor
+
+        # Save the scene pos
+        oldPos = self.mapToScene(event.pos())
+
+        # Zoom
+        if event.angleDelta().y() > 0:
+            zoomFactor = zoomInFactor
+        else:
+            zoomFactor = zoomOutFactor
+        self.scale(zoomFactor, zoomFactor)
+
+        # Get the new position
+        newPos = self.mapToScene(event.pos())
+
+        # Move scene to old position
+        delta = newPos - oldPos
+        self.translate(delta.x(), delta.y())
 
      
 class Game():
@@ -15,6 +50,7 @@ class Game():
         self.r = 50
         self.y = 300
         self.x = 400
+        self.scale = 1
         self.moving = False
  
     def loop(self):
@@ -23,7 +59,7 @@ class Game():
                 sys.exit()
     
         self.screen.fill((0, 0, 0))
-        pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r)
+        self.drawing()
         pygame.display.update()
     
         keys = pygame.key.get_pressed()
@@ -32,9 +68,13 @@ class Game():
             self.x -= 3
         elif keys[pygame.K_RIGHT]:
             self.x += 3
+
+    def drawing(self):
+        pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r)
      
 class W(QWidget):
     def __init__(self):
+        self.w = GraphicsView(self)                                       # +++
         super().__init__()
         self.btn_rev = QPushButton('Reverse',self)
         self.timer = QTimer()
@@ -87,6 +127,9 @@ class W(QWidget):
 
     def mouseReleaseEvent(self, event):
         self.game.moving = False
+
+    def wheelEvent(self, event):
+        print(event.angleDelta().x())
  
 if __name__ == "__main__":
     import sys
