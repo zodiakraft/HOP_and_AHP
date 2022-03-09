@@ -18,7 +18,7 @@
 # https://dillinger.io/
 # https://nuancesprog.ru/p/7105/
 
-#!/usr/bin/python3
+# RETURN!!!/!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 #if '#' in all_code:
