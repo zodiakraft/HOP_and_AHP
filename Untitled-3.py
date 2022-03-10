@@ -1,87 +1,67 @@
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
-from PyQt5.QtGui import QPainter, QPainterPath
-from PyQt5.QtCore import QSize
-from random import randint
-
-ded = [[(20, 20), (350, 525), (100, 300), (20, 20)]]
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class GraphicsView(QtWidgets.QGraphicsView):                                    # +++
+
+class Diedrico(QtWidgets.QWidget):
+    def paintEvent(self, event):
+        qp = QtGui.QPainter(self)
+        pen = QtGui.QPen(QtGui.QColor(QtCore.Qt.black), 5)
+        qp.setPen(pen)
+        qp.drawRect(500, 500, 1000, 1000)
+
+
+class UiVentana(QtWidgets.QMainWindow):
+    factor = 1.5
+
     def __init__(self, parent=None):
-        super(GraphicsView, self).__init__(parent)
-        self.setScene(QtWidgets.QGraphicsScene(self))
-        self.resize(1000, 600)
+        super(UiVentana, self).__init__(parent)
 
-        self.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
-        self.setResizeAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
-        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.setBackgroundBrush(QtGui.QBrush(QtGui.QColor(30, 30, 30)))
-        self.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self._scene = QtWidgets.QGraphicsScene(self)
+        self._view = QtWidgets.QGraphicsView(self._scene)
 
-    def wheelEvent(self, event):
-        """ Увеличение или уменьшение масштаба. """
-        zoomInFactor = 1.25
-        zoomOutFactor = 1 / zoomInFactor
+        self._diedrico = Diedrico()
+        self._diedrico.setFixedSize(2000, 2000)
+        self._scene.addWidget(self._diedrico)
 
-        # Save the scene pos
-        oldPos = self.mapToScene(event.pos())
+        self.setCentralWidget(self._view)
 
-        # Zoom
-        if event.angleDelta().y() > 0:
-            zoomFactor = zoomInFactor
-        else:
-            zoomFactor = zoomOutFactor
-        self.scale(zoomFactor, zoomFactor)
+        QtWidgets.QShortcut(
+            QtGui.QKeySequence(QtGui.QKeySequence.ZoomIn),
+            self._view,
+            context=QtCore.Qt.WidgetShortcut,
+            activated=self.zoom_in,
+        )
 
-        # Get the new position
-        newPos = self.mapToScene(event.pos())
+        QtWidgets.QShortcut(
+            QtGui.QKeySequence(QtGui.QKeySequence.ZoomOut),
+            self._view,
+            context=QtCore.Qt.WidgetShortcut,
+            activated=self.zoom_out,
+        )
 
-        # Move scene to old position
-        delta = newPos - oldPos
-        self.translate(delta.x(), delta.y())
+    @QtCore.pyqtSlot()
+    def zoom_in(self):
+        scale_tr = QtGui.QTransform()
+        scale_tr.scale(UiVentana.factor, UiVentana.factor)
 
+        tr = self._view.transform() * scale_tr
+        self._view.setTransform(tr)
 
-class MainWindow(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
+    @QtCore.pyqtSlot()
+    def zoom_out(self):
+        scale_tr = QtGui.QTransform()
+        scale_tr.scale(UiVentana.factor, UiVentana.factor)
 
-        self.w = GraphicsView(self)                                       # +++
-        self.drawLine()                                                   # +++
+        scale_inverted, invertible = scale_tr.inverted()
 
-    def initUI(self):
-        self.setMinimumSize(QSize(200, 200))
-        self.resize(1000, 600)
-        self.setWindowTitle('Das')
-        
-    def drawLine(self, qp=None):                    # + =None
-        path = QPainterPath()
-        def draw_trajectory(line):
-            for i, (x, y) in enumerate(line):
-                if i == 0:
-                    path.moveTo(x, y)
-                else:
-                    path.lineTo(x, y)
-
-        for line in ded:
-            draw_trajectory(line)
-
-#            qp.drawPath(path)
-
-            self.w.scene().addPath(                                        # +++
-                path, 
-                QtGui.QPen(QtGui.QColor(230, 230, 230)),
-                QtGui.QBrush(QtGui.QColor(*[randint(0, 255) for _ in range(4)]))   
-                )
+        if invertible:
+            tr = self._view.transform() * scale_inverted
+            self._view.setTransform(tr)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    w = MainWindow()
-    w.show()
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    ui = UiVentana()
+    ui.show()
     sys.exit(app.exec_())
