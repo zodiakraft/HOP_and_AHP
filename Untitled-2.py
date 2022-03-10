@@ -39,9 +39,12 @@ class Game():
         if scaling == True:
             if self.scale > 1:
                 self.r *= 1.25
+                self.x = self.x - (200 - self.x) * 1.25
+                self.x = self.x - (200 - self.x) * 1.25
                 pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r)
             elif self.scale < 1:
                 self.r *= 0.75
+                self.x = self.x + (200 - self.y) * 0.75
                 pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r)
         else:
             pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r*0.75)
@@ -63,7 +66,7 @@ class W(QWidget):
         self.game.loop()
         self.update()
             
-    def paintEvent(self,e):
+    def paintEvent(self, event):
         p = QPainter(self)
         img = QImage(self.game.screen.get_buffer(),400,400,QImage.Format_RGB32)
         p.drawImage(200,0,img)
