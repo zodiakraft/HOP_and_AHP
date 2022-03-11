@@ -120,7 +120,6 @@ class W(QWidget):
         self.game.drawing(scaling = True)
  
 if __name__ == "__main__":
-    import sys
     app = QApplication(sys.argv)
     w = W()
     w.resize(600,400)
