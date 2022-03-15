@@ -12,7 +12,7 @@ from PyQt5.Qt import Qt
 from PyQt5.QtWidgets import (QWidget, QMenuBar, QTextBrowser, QTextEdit,
 QMessageBox, QApplication, QAction, QMainWindow, QPushButton, QDesktopWidget,
 QGridLayout, QFileDialog, QListWidget, QSpacerItem, QSizePolicy, QTableWidget,
-QLineEdit, QLabel, QDoubleSpinBox, QAbstractItemView, QStatusBar, qApp, QMenu,
+QLineEdit, QLabel, QDoubleSpinBox, QAbstractItemView, QStatusBar, QMenu,
 QMessageBox, QTabWidget, QTreeWidget, QTreeWidgetItem, QFrame, QScrollArea,
 QToolButton, QVBoxLayout)
 from PyQt5.QtCore import QCoreApplication, QSize, QTimer, QPoint
@@ -200,7 +200,7 @@ class Shell(QWidget):
         
         self.tab2 = QTabWidget()
         self.tab2.addTab(self.fridconfig, 'Конфигурация')
-        self.tab2.setMinimumWidth(250)
+        self.tab2.setMinimumWidth(240)
         self.tab2.setMinimumHeight(505)
         self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
         self.layout.addWidget(self.tab2, 1, 3, 3, 2)
@@ -208,7 +208,8 @@ class Shell(QWidget):
         self.tab3 = QTabWidget()
         self.tab3.addTab(QtWidgets.QLabel('1'), 'Проводник')
         self.tab3.setMinimumHeight(250)
-        self.tab2.setMaximumWidth(self.size().width() // 1.5)
+        self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
+        # self.tab2.setMaximumWidth(self.size().width() // 1.5)
         self.layout.addWidget(self.tab3, 2, 0, 2, 2)
 
         self.resized.connect(self.tabs)
@@ -234,7 +235,7 @@ class Shell(QWidget):
     def paintEvent(self, event, scene = 0):
         if scene == 0:
             p = QPainter(self)
-            print(self.width(), self.tab3.width(), self.tab2.width(), self.tab3.width() + self.tab2.width())
+            print(self.width(), self.tab3.width(), self.tab2.width(), self.tab3.width() + self.tab2.width(), self.width())
             self.transform_x = self.tab1.width() - 3
             self.transform_y = self.tab1.height() - 20
             self.game.screen = pygame.transform.scale(self.game.screen, (self.transform_x, self.transform_y))
