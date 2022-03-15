@@ -2,7 +2,7 @@ import sys
 import pygame
 from random import randint
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow, QGridLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMainWindow, QGridLayout, QTabWidget
 from PyQt5.QtCore import QTimer, QSize, QPoint
 from PyQt5.QtGui import QImage, QPainter, QCursor
 
@@ -18,6 +18,7 @@ class Game():
         self.scale = 1
         self.scaling = False
         self.moving = False
+        self.scene_1 = 0
  
     def loop(self):
         for event in pygame.event.get():
@@ -34,18 +35,18 @@ class Game():
             self.x -= 3
         elif keys[pygame.K_RIGHT]:
             self.x += 3
+        
+        self.scene()
+        
+    def scene(self):
+        if self.scene_1 == 1:
+            pygame.draw.circle(self.screen, (150, 150, 150), (100, 100), 100)
             
-    def drawing(self, scaling = False):
-        if scaling == True:
-            if self.scale > 1:
-                self.r *= 1.25
-                self.x = self.x - (200 - self.x) * 1.25
-                self.x = self.x - (200 - self.x) * 1.25
-                pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r)
-            elif self.scale < 1:
-                self.r *= 0.75
-                self.x = self.x + (200 - self.y) * 0.75
-                pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r)
+    def drawing(self):
+        if self.scale > 1:
+            pygame.draw.circle(self.screen, (150, 150, 150), (200 + ((self.x - 200) * self.scale), 200 + ((self.y - 200) * self.scale)), self.r * self.scale)
+        elif self.scale < 1:
+            pygame.draw.circle(self.screen, (150, 150, 150), (200 + ((self.x - 200) * self.scale), 200 + ((self.y - 200) * self.scale)), self.r * self.scale)
         else:
             pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r*0.75)
      
@@ -66,13 +67,16 @@ class W(QWidget):
         self.game.loop()
         self.update()
             
-    def paintEvent(self, event):
-        p = QPainter(self)
-        img = QImage(self.game.screen.get_buffer(),400,400,QImage.Format_RGB32)
-        p.drawImage(200,0,img)
+    def paintEvent(self, event, scene = 0):
+        if scene == 0:
+            p = QPainter(self)
+            img = QImage(self.game.screen.get_buffer(),400,400,QImage.Format_RGB32)
+            p.drawImage(200,0,img)
+        if scene == 1:
+            self.game.scene_1 = 1
     
     def on_rev(self):
-        self.game.x = 100
+        self.paintEvent(event = 0, scene = 1)
         
     def keyPressEvent(self, event):
         print(event.key())
@@ -109,15 +113,15 @@ class W(QWidget):
         angleX = angle.x()
         angleY = angle.y()
         if angleY < 0:
-            self.game.scale = 0.75
+            self.game.scale -= 0.1
             print('LOW')
         elif angleY > 0:
-            self.game.scale = 1.25
+            self.game.scale += 0.25
             print('HIGH')
         else:
             print('ERROR!')
         self.game.scaling = True
-        self.game.drawing(scaling = True)
+        self.game.drawing()
  
 if __name__ == "__main__":
     import sys

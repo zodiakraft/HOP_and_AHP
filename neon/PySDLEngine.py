@@ -3,9 +3,11 @@ import time
 from os.path import abspath
 import sys
 import math
+from random import randint
 
+import pygame
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtGui import QIcon, QFont,  QWindow,  QKeySequence
+from PyQt5.QtGui import QIcon, QFont,  QWindow,  QKeySequence, QImage, QPainter, QCursor
 from PyQt5.Qt import Qt
 from PyQt5.QtWidgets import (QWidget, QMenuBar, QTextBrowser, QTextEdit,
 QMessageBox, QApplication, QAction, QMainWindow, QPushButton, QDesktopWidget,
@@ -13,7 +15,51 @@ QGridLayout, QFileDialog, QListWidget, QSpacerItem, QSizePolicy, QTableWidget,
 QLineEdit, QLabel, QDoubleSpinBox, QAbstractItemView, QStatusBar, qApp, QMenu,
 QMessageBox, QTabWidget, QTreeWidget, QTreeWidgetItem, QFrame, QScrollArea,
 QToolButton, QVBoxLayout)
-from PyQt5.QtCore import QCoreApplication, Qt, QSize, right
+from PyQt5.QtCore import QCoreApplication, QSize, QTimer, QPoint
+
+
+class Game():
+    def __init__(self):
+        pygame.init()
+        pygame.display.set_mode((1,1)) #хак
+        self.screen = pygame.Surface((400, 400))
+        self.r = 50
+        self.y = 300
+        self.x = 400
+        self.scale = 1
+        self.scaling = False
+        self.moving = False
+        self.scene_1 = 0
+ 
+    def loop(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+    
+        self.screen.fill((0, 0, 0))
+        self.drawing()
+        pygame.display.update()
+    
+        keys = pygame.key.get_pressed()
+    
+        if keys[pygame.K_LEFT]:
+            self.x -= 3
+        elif keys[pygame.K_RIGHT]:
+            self.x += 3
+        
+        self.scene()
+        
+    def scene(self):
+        if self.scene_1 == 1:
+            pygame.draw.circle(self.screen, (150, 150, 150), (100, 100), 100)
+            
+    def drawing(self):
+        if self.scale > 1:
+            pygame.draw.circle(self.screen, (150, 150, 150), (200 + ((self.x - 200) * self.scale), 200 + ((self.y - 200) * self.scale)), self.r * self.scale)
+        elif self.scale < 1:
+            pygame.draw.circle(self.screen, (150, 150, 150), (200 + ((self.x - 200) * self.scale), 200 + ((self.y - 200) * self.scale)), self.r * self.scale)
+        else:
+            pygame.draw.circle(self.screen, (150, 150, 150), (self.x, self.y), self.r*0.75)
 
 
 class Expander(QWidget):
@@ -84,10 +130,14 @@ class Shell(QWidget):
 
     def __init__(self):
         super(Shell, self).__init__()
+        # super().__init__()
+        self.timer = QTimer()
         self.initUI()
+        self.init_pygame()
 
     def initUI(self):
         self.resize(800, 600)
+        # self.setMinimumWidth(800)
         self.layout = QGridLayout(self)
 
         self.gridlayout = QGridLayout(self)
@@ -126,10 +176,12 @@ class Shell(QWidget):
         self.layout.addWidget(self.tab, 1, 0)
 
         self.tab1 = QTabWidget()
+        self.tab1.setDocumentMode(True)
         self.tab1.addTab(QtWidgets.QLabel('1'), 'Сцена')
         self.tab1.addTab(QtWidgets.QLabel('1'), 'Игра')
-        self.tab1.setMinimumWidth(420)
-        self.tab1.setMaximumWidth(self.size().width() // 2)
+        # self.tab1.setMinimumWidth(420)
+        self.tab1.setMinimumWidth(220)
+        # self.tab1.setMaximumWidth(self.size().width() // 2)
         self.layout.addWidget(self.tab1, 1, 1)
 
         self.collapsible = Expander(self, 'Геометрия объекта')
@@ -156,6 +208,7 @@ class Shell(QWidget):
         self.tab3 = QTabWidget()
         self.tab3.addTab(QtWidgets.QLabel('1'), 'Проводник')
         self.tab3.setMinimumHeight(250)
+        self.tab2.setMaximumWidth(self.size().width() // 1.5)
         self.layout.addWidget(self.tab3, 2, 0, 2, 2)
 
         self.resized.connect(self.tabs)
@@ -166,9 +219,78 @@ class Shell(QWidget):
     
     def tabs(self):
         self.tab.setMaximumWidth(self.size().width() // 5)
-        self.tab1.setMaximumWidth(self.size().width() // 2)
+        self.tab3.setMaximumWidth(self.size().width() // 1.5)
         self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
-        print(self.size().height())
+        
+    def init_pygame(self):
+        self.game = Game()
+        self.timer.timeout.connect(self.pygame_loop)
+        self.timer.start(10)
+ 
+    def pygame_loop(self):
+        self.game.loop()
+        self.update()
+            
+    def paintEvent(self, event, scene = 0):
+        if scene == 0:
+            p = QPainter(self)
+            print(self.width(), self.tab3.width(), self.tab2.width(), self.tab3.width() + self.tab2.width())
+            self.transform_x = self.tab1.width() - 3
+            self.transform_y = self.tab1.height() - 20
+            self.game.screen = pygame.transform.scale(self.game.screen, (self.transform_x, self.transform_y))
+            img = QImage(self.game.screen.get_buffer(), self.transform_x, self.transform_y, QImage.Format_RGB32)
+            p.drawImage(self.size().width() // 5 + 17, 31, img)
+        if scene == 1:
+            self.game.scene_1 = 1
+    
+    def on_rev(self):
+        self.paintEvent(event = 0, scene = 1)
+        
+    def keyPressEvent(self, event):
+        # print(event.key())
+        if event.key() in [QtCore.Qt.Key_D, QtCore.Qt.Key_Right]:
+            self.game.x += 2
+        elif event.key() in [QtCore.Qt.Key_A]:
+            self.game.x -= 2
+        if event.key() in [QtCore.Qt.Key_W]:
+            self.game.y -= 2
+        if event.key() in [QtCore.Qt.Key_S]:
+            self.game.y += 2
+        event.accept()
+        
+# if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+# if event.type == pygame.MOUSEMOTION:
+# if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+        
+    def mousePressEvent(self, event):
+        # print(int(str(event.pos()).replace('PyQt5.QtCore.QPoint(', '').split(', ')[0]) - 200, int(str(event.pos()).replace('PyQt5.QtCore.QPoint(', '').replace(')', '').split(', ')[1]))
+        # print(self.game.x, self.game.y)
+        if self.game.x < int(str(event.pos()).replace('PyQt5.QtCore.QPoint(', '').split(', ')[0]) - 200 < self.game.x + 100 and self.game.y < int(str(event.pos()).replace('PyQt5.QtCore.QPoint(', '').replace(')', '').split(', ')[1]) < self.game.y + 100:
+            self.game.moving = True
+    
+    def mouseMoveEvent(self, event):
+        if self.game.moving:
+            self.game.x = int(str(event.pos()).replace('PyQt5.QtCore.QPoint(', '').split(', ')[0]) - 200
+            self.game.y = int(str(event.pos()).replace('PyQt5.QtCore.QPoint(', '').replace(')', '').split(', ')[1])
+
+    def mouseReleaseEvent(self, event):
+        self.game.moving = False
+        
+    def wheelEvent(self, event):
+        angle = event.angleDelta()
+        angleX = angle.x()
+        angleY = angle.y()
+        if angleY < 0:
+            self.game.scale -= 0.1
+            # print('LOW')
+        elif angleY > 0:
+            self.game.scale += 0.25
+            # print('HIGH')
+        else:
+            pass
+            # print('ERROR!')
+        self.game.scaling = True
+        self.game.drawing()
 
 
         
