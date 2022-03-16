@@ -177,8 +177,8 @@ class Shell(QWidget):
 
         self.tab1 = QTabWidget()
         self.tab1.setDocumentMode(True)
-        self.tab1.addTab(QtWidgets.QLabel('1'), 'Сцена')
-        self.tab1.addTab(QtWidgets.QLabel('1'), 'Игра')
+        self.tab1.addTab(QtWidgets.QLabel(), 'Сцена')
+        self.tab1.addTab(QtWidgets.QLabel(), 'Игра')
         # self.tab1.setMinimumWidth(420)
         # self.tab1.setMaximumWidth(self.size().width() // 2)
         self.layout.addWidget(self.tab1, 1, 1)
@@ -197,19 +197,22 @@ class Shell(QWidget):
         self.fridconfig.layout.setContentsMargins(0, 0, 0, 0)
         self.fridconfig.setLayout(self.fridconfig.layout)
         
+        self.spacer = QSpacerItem(350, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.layout.addItem(self.spacer, 1, 2)
+
         self.tab2 = QTabWidget()
         self.tab2.addTab(self.fridconfig, 'Конфигурация')
         self.tab2.setMinimumWidth(240)
         self.tab2.setMinimumHeight(505)
         # self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
-        self.layout.addWidget(self.tab2, 1, 3, 3, 2)
+        self.layout.addWidget(self.tab2, 1, 3, 2, 1)
 
         self.tab3 = QTabWidget()
         self.tab3.addTab(QtWidgets.QLabel('1'), 'Проводник')
         self.tab3.setMinimumHeight(250)
         self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
         # self.tab2.setMaximumWidth(self.size().width() // 1.5)
-        self.layout.addWidget(self.tab3, 2, 0, 2, 2)
+        self.layout.addWidget(self.tab3, 2, 0, 1, 3)
 
         self.resized.connect(self.tabs)
     
@@ -218,10 +221,10 @@ class Shell(QWidget):
         return super(Shell, self).resizeEvent(event)
     
     def tabs(self):
-        self.tab.setMinimumWidth(self.size().width() // 5)
-        self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
-        self.tab2.setMinimumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
-        self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
+        self.tab.setMaximumWidth(self.size().width() // 5)
+        self.tab2.setMaximumWidth(self.size().width()// 10 * 3)
+        self.tab3.setMaximumWidth(self.width()-self.tab2.width()-33)
+        # self.tab1.setMaximumWidth(self.width()//10)
         
     def init_pygame(self):
         self.game = Game()
