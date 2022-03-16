@@ -171,8 +171,8 @@ class Shell(QWidget):
 
         self.tab = QTabWidget()
         self.tab.addTab(self.directory, 'Директория проекта')
-        self.tab.setMinimumWidth(170)
-        self.tab.setMaximumWidth(self.size().width() // 5)
+        self.tab.setMinimumWidth(160)
+        # self.tab.setMaximumWidth(self.size().width() // 5)
         self.layout.addWidget(self.tab, 1, 0)
 
         self.tab1 = QTabWidget()
@@ -180,7 +180,6 @@ class Shell(QWidget):
         self.tab1.addTab(QtWidgets.QLabel('1'), 'Сцена')
         self.tab1.addTab(QtWidgets.QLabel('1'), 'Игра')
         # self.tab1.setMinimumWidth(420)
-        self.tab1.setMinimumWidth(220)
         # self.tab1.setMaximumWidth(self.size().width() // 2)
         self.layout.addWidget(self.tab1, 1, 1)
 
@@ -202,7 +201,7 @@ class Shell(QWidget):
         self.tab2.addTab(self.fridconfig, 'Конфигурация')
         self.tab2.setMinimumWidth(240)
         self.tab2.setMinimumHeight(505)
-        self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
+        # self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
         self.layout.addWidget(self.tab2, 1, 3, 3, 2)
 
         self.tab3 = QTabWidget()
@@ -219,9 +218,10 @@ class Shell(QWidget):
         return super(Shell, self).resizeEvent(event)
     
     def tabs(self):
-        self.tab.setMaximumWidth(self.size().width() // 5)
-        self.tab3.setMaximumWidth(self.size().width() // 1.5)
-        self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
+        self.tab.setMinimumWidth(self.size().width() // 5)
+        self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
+        self.tab2.setMinimumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
+        self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
         
     def init_pygame(self):
         self.game = Game()
