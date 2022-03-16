@@ -137,7 +137,8 @@ class Shell(QWidget):
 
     def initUI(self):
         self.resize(800, 600)
-        # self.setMinimumWidth(800)
+        self.setMinimumWidth(800)
+        self.setMinimumHeight(600)
         self.layout = QGridLayout(self)
 
         self.gridlayout = QGridLayout(self)
@@ -196,23 +197,20 @@ class Shell(QWidget):
 
         self.fridconfig.layout.setContentsMargins(0, 0, 0, 0)
         self.fridconfig.setLayout(self.fridconfig.layout)
-        
-        self.spacer = QSpacerItem(350, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.layout.addItem(self.spacer, 1, 2)
 
         self.tab2 = QTabWidget()
         self.tab2.addTab(self.fridconfig, 'Конфигурация')
         self.tab2.setMinimumWidth(240)
-        self.tab2.setMinimumHeight(505)
+        # self.tab2.setMinimumHeight(505)
         # self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
-        self.layout.addWidget(self.tab2, 1, 3, 2, 1)
+        self.layout.addWidget(self.tab2, 1, 2, 2, 1)
 
         self.tab3 = QTabWidget()
         self.tab3.addTab(QtWidgets.QLabel('1'), 'Проводник')
-        self.tab3.setMinimumHeight(250)
-        self.tab3.setMinimumWidth(self.width()-self.tab2.width()-33)
+        # self.tab3.setMinimumHeight(100)
+        self.tab3.setMinimumWidth(527)
         # self.tab2.setMaximumWidth(self.size().width() // 1.5)
-        self.layout.addWidget(self.tab3, 2, 0, 1, 3)
+        self.layout.addWidget(self.tab3, 2, 0, 1, 2)
 
         self.resized.connect(self.tabs)
     
@@ -221,9 +219,10 @@ class Shell(QWidget):
         return super(Shell, self).resizeEvent(event)
     
     def tabs(self):
-        self.tab.setMaximumWidth(self.size().width() // 5)
-        self.tab2.setMaximumWidth(self.size().width()// 10 * 3)
+        self.tab.setMaximumWidth(self.size().width() // 10 * 2.25)
+        self.tab2.setMaximumWidth(self.size().width()// 10 * 2.45)
         self.tab3.setMaximumWidth(self.width()-self.tab2.width()-33)
+        self.tab3.setMaximumHeight(self.height()//10 * 2.95)
         # self.tab1.setMaximumWidth(self.width()//10)
         
     def init_pygame(self):
@@ -238,12 +237,15 @@ class Shell(QWidget):
     def paintEvent(self, event, scene = 0):
         if scene == 0:
             p = QPainter(self)
-            print(self.width(), self.tab3.width(), self.tab2.width(), self.tab3.width() + self.tab2.width(), self.width())
-            self.transform_x = self.tab1.width() - 3
-            self.transform_y = self.tab1.height() - 20
+            print(self.width(), self.height(), self.tab3.width(), self.tab2.width(), self.tab3.width() + self.tab2.width(), self.width())
+            self.transform_x = self.tab3.width() - self.tab.width() - 7
+            self.transform_y = self.tab1.height() - 24
+            # self.spacer = QSpacerItem(0, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
+            # self.layout.addItem(self.spacer, 1, 2)
             self.game.screen = pygame.transform.scale(self.game.screen, (self.transform_x, self.transform_y))
             img = QImage(self.game.screen.get_buffer(), self.transform_x, self.transform_y, QImage.Format_RGB32)
-            p.drawImage(self.size().width() // 5 + 17, 31, img)
+            p.drawImage(self.tab.width() + 20, 36, img)
+            # savezone
         if scene == 1:
             self.game.scene_1 = 1
     
