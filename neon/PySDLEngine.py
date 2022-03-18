@@ -17,11 +17,15 @@ QMessageBox, QTabWidget, QTreeWidget, QTreeWidgetItem, QFrame, QScrollArea,
 QToolButton, QVBoxLayout)
 from PyQt5.QtCore import QCoreApplication, QSize, QTimer, QPoint
 
+import win32api
+import win32con
+import win32gui
+
 
 class Game():
     def __init__(self):
         pygame.init()
-        pygame.display.set_mode((1,1)) #хак
+        pygame.display.set_mode((1,1), pygame.NOFRAME) #хак
         self.screen = pygame.Surface((400, 400))
         self.r = 50
         self.y = 300
@@ -30,6 +34,18 @@ class Game():
         self.scaling = False
         self.moving = False
         self.scene_1 = 0
+        
+        # сразу укажем, что окно должно открываться в левом верхнем углу экрана
+        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,0)
+        # получаем окно pygame
+        hwnd = pygame.display.get_wm_info()["window"]
+        # указываем параметры, какой цвет в программе должен меняться на прозрачный
+        win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
+                            win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
+        # -> убираем с панели задач иконку программы
+        # для этого возьмем текущее окно, которое получили в hwnd = pygame.display.get_wm_info()["window"]
+        # указываем параметры для того, чтобы скрыть иконки
+        win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)| win32con.WS_EX_TOOLWINDOW)
  
     def loop(self):
         for event in pygame.event.get():
@@ -133,6 +149,8 @@ class Shell(QWidget):
         # super().__init__()
         self.timer = QTimer()
         self.initUI()
+        # self.setWindowFlags(QtCore.Qt.SplashScreen)
+        # Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint
         self.init_pygame()
 
     def initUI(self):
@@ -203,14 +221,14 @@ class Shell(QWidget):
         self.tab2.setMinimumWidth(240)
         # self.tab2.setMinimumHeight(505)
         # self.tab2.setMaximumWidth(self.size().width() - self.size().width() // 5 - self.size().width() // 2)
-        self.layout.addWidget(self.tab2, 1, 2, 2, 1)
+        self.layout.addWidget(self.tab2, 1, 3, 2, 1)
 
         self.tab3 = QTabWidget()
         self.tab3.addTab(QtWidgets.QLabel('1'), 'Проводник')
         # self.tab3.setMinimumHeight(100)
         self.tab3.setMinimumWidth(527)
         # self.tab2.setMaximumWidth(self.size().width() // 1.5)
-        self.layout.addWidget(self.tab3, 2, 0, 1, 2)
+        self.layout.addWidget(self.tab3, 2, 0, 1, 3)
 
         self.resized.connect(self.tabs)
     
@@ -239,12 +257,13 @@ class Shell(QWidget):
             p = QPainter(self)
             print(self.width(), self.height(), self.tab3.width(), self.tab2.width(), self.tab3.width() + self.tab2.width(), self.width())
             self.transform_x = self.tab3.width() - self.tab.width() - 7
-            self.transform_y = self.tab1.height() - 24
-            # self.spacer = QSpacerItem(0, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
-            # self.layout.addItem(self.spacer, 1, 2)
+            self.transform_y = self.tab1.height() - 20
+            self.spacer = QSpacerItem(2, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
+            self.layout.addItem(self.spacer, 1, 2)
             self.game.screen = pygame.transform.scale(self.game.screen, (self.transform_x, self.transform_y))
+            pygame.draw.rect(self.game.screen, (218, 218, 218), (0, 0, self.transform_x, self.transform_y), 1)
             img = QImage(self.game.screen.get_buffer(), self.transform_x, self.transform_y, QImage.Format_RGB32)
-            p.drawImage(self.tab.width() + 20, 36, img)
+            p.drawImage(self.tab.width() + 16, 30, img)
             # savezone
         if scene == 1:
             self.game.scene_1 = 1
