@@ -1,0 +1,652 @@
+[
+    {
+        "version": 0.4
+    },
+    {
+        "type": "node",
+        "x": 509,
+        "y": 96,
+        "size": [
+            473,
+            316
+        ],
+        "color": [
+            99,
+            114,
+            116
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "S['box'] = pyglet.graphics.vertex_list_indexed(",
+            "      4, [0, 1, 2, 0, 2, 3],",
+            "      ('v2i', (0, 0, 10, 0, 10, 10, 0, 10)),",
+            "      ('c3B', (255,255,255)*4) )",
+            "",
+            "def draw_rect(pos=(0,0), size=(10,10)):",
+            "  x, y = int(pos[0]),  int(pos[1])",
+            "  w, h = int(size[0]), int(size[1])",
+            "  S['box'].vertices = (x,     y,",
+            "                       x + w, y,",
+            "                       x + w, y + h,",
+            "                       x,     y + h)",
+            "  return S['box']",
+            "",
+            "call = draw_rect"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 55,
+                    "put": {
+                        "name": "result 1"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "size"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 55,
+                    "put": {
+                        "name": "result 0"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "pos"
+                    }
+                }
+            }
+        ],
+        "id": 43
+    },
+    {
+        "type": "field",
+        "x": 139,
+        "y": 504,
+        "size": [
+            256,
+            169
+        ],
+        "code": [
+            "'''",
+            "Little ping-pong game",
+            "Keys:",
+            "    upper pad:",
+            "        A    D",
+            "    bottom pad:",
+            "        LEFT RIGHT",
+            "'''"
+        ],
+        "connects": [],
+        "id": 44
+    },
+    {
+        "type": "node",
+        "x": 482,
+        "y": 459,
+        "size": [
+            422,
+            482
+        ],
+        "color": [
+            93,
+            93,
+            89
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "G['key'] = []",
+            "",
+            "def keyboard(window=0):",
+            "",
+            "  @window.event",
+            "  def on_key_press(symbol, mod):",
+            "    G['key'].append(symbol)",
+            "",
+            "  @window.event",
+            "  def on_key_release(symbol, mod):",
+            "    if symbol in G['key']:",
+            "      G['key'].pop(G['key'].index(symbol))",
+            "",
+            "  @window.event",
+            "  def on_deactivate():",
+            "    G['key'] = []",
+            "",
+            "  return G['key']",
+            "",
+            "call = keyboard"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 48,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "window"
+                    }
+                }
+            }
+        ],
+        "id": 45
+    },
+    {
+        "type": "field",
+        "x": 184,
+        "y": 223,
+        "size": [
+            110,
+            118
+        ],
+        "code": [
+            "[]"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 50,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 46
+    },
+    {
+        "type": "node",
+        "x": 509,
+        "y": -83,
+        "size": [
+            379,
+            207
+        ],
+        "color": [
+            127,
+            96,
+            112
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "def render(meshes=None):",
+            "  window = G['window']",
+            "  window.switch_to()",
+            "  window.clear()",
+            "  for mesh in meshes:",
+            "    mesh.draw(pyglet.gl.GL_TRIANGLES)",
+            "  ",
+            "call = render"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 52,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "meshes"
+                    }
+                }
+            }
+        ],
+        "id": 47
+    },
+    {
+        "type": "node",
+        "x": 430,
+        "y": 553,
+        "size": [
+            461,
+            208
+        ],
+        "color": [
+            129,
+            105,
+            124
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "config = pyglet.gl.Config(double_buffer=False)",
+            "G['window'] = pyglet.window.Window(300, 450, config=config)",
+            "",
+            "def create_window():",
+            "  return G['window']",
+            "",
+            "call = create_window",
+            "",
+            "cleanup = lambda: G['window'].close()"
+        ],
+        "connects": [],
+        "id": 48
+    },
+    {
+        "type": "node",
+        "x": 371,
+        "y": 278,
+        "size": [
+            561,
+            370
+        ],
+        "color": [
+            101,
+            91,
+            127
+        ],
+        "code": [
+            "from typing import *",
+            "",
+            "w = G['window']",
+            "S['size'] = [70, 10]",
+            "S['position'] = [w.width/2 - S['size'][0]/2, w.height - 30]",
+            "",
+            "def pad_upper(key=[]) -> Tuple[Any, Any, Any]:",
+            "  speed = G['dt'] * 20",
+            "",
+            "  if 'D' in key:",
+            "    if S['position'][0] < w.width - S['size'][0]:",
+            "      S['position'][0] += speed",
+            "  if 'A' in key:",
+            "    if S['position'][0] > 0:",
+            "      S['position'][0] -= speed",
+            "  return S['position'], S['size'], S",
+            "",
+            "call = pad_upper"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 50,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "key"
+                    }
+                }
+            }
+        ],
+        "id": 49
+    },
+    {
+        "type": "node",
+        "x": 453,
+        "y": 375,
+        "size": [
+            715,
+            151
+        ],
+        "color": [
+            81,
+            121,
+            111
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "def keys_to_names(keys=[]):",
+            "  keys = list(map(lambda x: pyglet.window.key.symbol_string(x), keys))",
+            "  return keys",
+            "",
+            "call = keys_to_names"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 45,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "keys"
+                    }
+                }
+            }
+        ],
+        "id": 50
+    },
+    {
+        "type": "node",
+        "x": 654,
+        "y": 170,
+        "size": [
+            586,
+            752
+        ],
+        "color": [
+            101,
+            91,
+            127
+        ],
+        "code": [
+            "from typing import *",
+            "",
+            "w = G['window']",
+            "S['position'] = [w.width // 2, w.height // 2]",
+            "S['size'] = [10, 10]",
+            "S['acc'] = [2, 1]",
+            "",
+            "def ball(pad_u={}, pad_b={}) -> Tuple[Any, Any]:",
+            "  speed = G['dt'] * 6",
+            "  pos = S['position']",
+            "",
+            "  # OUT OF GAME",
+            "  if (pos[1] > w.height) or (pos[1] < -S['size'][0]):",
+            "    S['position'] = [w.width // 2, w.height // 2]",
+            "    S['acc'][1] *= -1",
+            "",
+            "  # WALLS COLLISION",
+            "  if pos[0] < w.width - S['size'][0]:",
+            "    S['acc'][0] *= -1",
+            "  if pos[0] > 0:",
+            "    S['acc'][0] *= -1",
+            "",
+            "  # PADS COLLISION  ",
+            "  pu, su = pad_u['position'], pad_u['size']",
+            "  if ((pu[1] > pos[1] > pu[1] - su[1]) and",
+            "      (pu[0] < pos[0] < pu[0] + su[0])):",
+            "    S['acc'][1] *= -1",
+            "",
+            "  pu, su = pad_b['position'], pad_b['size']",
+            "  if ((pu[1] < pos[1] < pu[1] + su[1]) and",
+            "      (pu[0] < pos[0] < pu[0] + su[0])):",
+            "    S['acc'][1] *= -1",
+            "",
+            "  # MOVEMENT",
+            "  S['position'][0] += S['acc'][0] * speed",
+            "  S['position'][1] += S['acc'][1] * speed",
+            "",
+            "  return S['position'], S['size']",
+            "",
+            "call = ball"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 49,
+                    "put": {
+                        "name": "result 2"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "pad_u"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 55,
+                    "put": {
+                        "name": "result 2"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "pad_b"
+                    }
+                }
+            }
+        ],
+        "id": 51
+    },
+    {
+        "type": "node",
+        "x": 509,
+        "y": -4,
+        "size": [
+            336,
+            150
+        ],
+        "color": [
+            81,
+            90,
+            127
+        ],
+        "code": [
+            "def join3(a=None, b=None, c=None):",
+            "  result = a, b, c",
+            "  return result",
+            "",
+            "call = join3"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 54,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "c"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 43,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "b"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 53,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "a"
+                    }
+                }
+            }
+        ],
+        "id": 52
+    },
+    {
+        "type": "node",
+        "x": 376,
+        "y": 96,
+        "size": [
+            473,
+            316
+        ],
+        "color": [
+            99,
+            114,
+            116
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "S['box'] = pyglet.graphics.vertex_list_indexed(",
+            "      4, [0, 1, 2, 0, 2, 3],",
+            "      ('v2i', (0, 0, 10, 0, 10, 10, 0, 10)),",
+            "      ('c3B', (255,255,255)*4) )",
+            "",
+            "def draw_rect(pos=(0,0), size=(10,10)):",
+            "  x, y = int(pos[0]),  int(pos[1])",
+            "  w, h = int(size[0]), int(size[1])",
+            "  S['box'].vertices = (x,     y,",
+            "                       x + w, y,",
+            "                       x + w, y + h,",
+            "                       x,     y + h)",
+            "  return S['box']",
+            "",
+            "call = draw_rect"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 49,
+                    "put": {
+                        "name": "result 0"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "pos"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 49,
+                    "put": {
+                        "name": "result 1"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "size"
+                    }
+                }
+            }
+        ],
+        "id": 53
+    },
+    {
+        "type": "node",
+        "x": 653,
+        "y": 95,
+        "size": [
+            473,
+            316
+        ],
+        "color": [
+            99,
+            114,
+            116
+        ],
+        "code": [
+            "import pyglet",
+            "",
+            "S['box'] = pyglet.graphics.vertex_list_indexed(",
+            "      4, [0, 1, 2, 0, 2, 3],",
+            "      ('v2i', (0, 0, 10, 0, 10, 10, 0, 10)),",
+            "      ('c3B', (255,100,20)*4) )",
+            "",
+            "def draw_rect(pos=(0,0), size=(10,10)):",
+            "  x, y = int(pos[0]),  int(pos[1])",
+            "  w, h = int(size[0]), int(size[1])",
+            "  S['box'].vertices = (x,     y,",
+            "                       x + w, y,",
+            "                       x + w, y + h,",
+            "                       x,     y + h)",
+            "  return S['box']",
+            "",
+            "call = draw_rect"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 51,
+                    "put": {
+                        "name": "result 1"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "size"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 51,
+                    "put": {
+                        "name": "result 0"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "pos"
+                    }
+                }
+            }
+        ],
+        "id": 54
+    },
+    {
+        "type": "node",
+        "x": 534,
+        "y": 280,
+        "size": [
+            490,
+            370
+        ],
+        "color": [
+            101,
+            91,
+            127
+        ],
+        "code": [
+            "from typing import *",
+            "",
+            "w = G['window']",
+            "S['size'] = [70, 10]",
+            "S['position'] = [w.width/2 - S['size'][0]/2, 20]",
+            "",
+            "def pad_bottom(key=[]) -> Tuple[Any, Any, Any]:",
+            "  speed = G['dt'] * 20",
+            "",
+            "  if 'RIGHT' in key:",
+            "    if S['position'][0] < w.width - S['size'][0]:",
+            "      S['position'][0] += speed",
+            "  if 'LEFT' in key:",
+            "    if S['position'][0] > 0:",
+            "      S['position'][0] -= speed",
+            "  return S['position'], S['size'], S",
+            "",
+            "call = pad_bottom"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 50,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "key"
+                    }
+                }
+            }
+        ],
+        "id": 55
+    }
+]

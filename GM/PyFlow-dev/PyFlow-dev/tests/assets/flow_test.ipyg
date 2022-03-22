@@ -1,0 +1,865 @@
+{
+    "id": 2047380826296,
+    "blocks": [
+        {
+            "id": 2047380828024,
+            "title": "Test flow 5",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                209,
+                0
+            ],
+            "position": [
+                -164.52734374999994,
+                768.8857536315913
+            ],
+            "width": 316,
+            "height": 256,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047509615672,
+                    "type": "input",
+                    "position": [
+                        158.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047509615816,
+                    "type": "output",
+                    "position": [
+                        158.0,
+                        256.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "d = 4\r\na + b + c",
+            "stdout": ""
+        },
+        {
+            "id": 2047509975832,
+            "title": "Test flow 1",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                193,
+                0
+            ],
+            "position": [
+                -391.3906250000001,
+                162.97559738159168
+            ],
+            "width": 302,
+            "height": 240,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047509976840,
+                    "type": "input",
+                    "position": [
+                        151.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047509976984,
+                    "type": "output",
+                    "position": [
+                        151.0,
+                        240.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "a = 1",
+            "stdout": ""
+        },
+        {
+            "id": 2047510054808,
+            "title": "Test flow 2",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                160,
+                0
+            ],
+            "position": [
+                -155.32421875000017,
+                -91.4736213684082
+            ],
+            "width": 300,
+            "height": 207,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047510055816,
+                    "type": "input",
+                    "position": [
+                        150.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047510055960,
+                    "type": "output",
+                    "position": [
+                        150.0,
+                        207.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "b = 2",
+            "stdout": ""
+        },
+        {
+            "id": 2047510222024,
+            "title": "Test flow 3",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                197,
+                0
+            ],
+            "position": [
+                -151.34375000000006,
+                461.26856613159157
+            ],
+            "width": 300,
+            "height": 244,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047510350296,
+                    "type": "input",
+                    "position": [
+                        150.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047510350440,
+                    "type": "output",
+                    "position": [
+                        150.0,
+                        244.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "c = 3\r\na + b",
+            "stdout": ""
+        },
+        {
+            "id": 2047510394344,
+            "title": "Test flow 4",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                171,
+                0
+            ],
+            "position": [
+                67.26562499999983,
+                189.97950363159168
+            ],
+            "width": 300,
+            "height": 218,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047510395352,
+                    "type": "input",
+                    "position": [
+                        150.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047510395496,
+                    "type": "output",
+                    "position": [
+                        150.0,
+                        218.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "b = 3\r\nb",
+            "stdout": ""
+        },
+        {
+            "id": 2047510572632,
+            "title": "Test flow 6",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                208,
+                0
+            ],
+            "position": [
+                -347.1406249999997,
+                1105.7998161315913
+            ],
+            "width": 300,
+            "height": 255,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047510594184,
+                    "type": "input",
+                    "position": [
+                        150.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047510594328,
+                    "type": "output",
+                    "position": [
+                        150.0,
+                        255.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "e = 5\r\na + b + c + d",
+            "stdout": ""
+        },
+        {
+            "id": 2047511620200,
+            "title": "Test flow 7",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                217,
+                0
+            ],
+            "position": [
+                31.117187500000142,
+                1094.0224723815913
+            ],
+            "width": 300,
+            "height": 264,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047511621208,
+                    "type": "input",
+                    "position": [
+                        150.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047511621352,
+                    "type": "output",
+                    "position": [
+                        150.0,
+                        264.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "f = 6",
+            "stdout": ""
+        },
+        {
+            "id": 2047511818888,
+            "title": "Test flow 8",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                210,
+                0
+            ],
+            "position": [
+                -193.41406249999972,
+                1538.487316131591
+            ],
+            "width": 364,
+            "height": 257,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047511819896,
+                    "type": "input",
+                    "position": [
+                        182.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047511820040,
+                    "type": "output",
+                    "position": [
+                        182.0,
+                        257.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "g = 7\r\na + b + c + d + e + f",
+            "stdout": ""
+        },
+        {
+            "id": 2047514048984,
+            "title": "Markdown",
+            "block_type": "MarkdownBlock",
+            "splitter_pos": [
+                0,
+                136
+            ],
+            "position": [
+                -360.859375,
+                1949.7724723815913
+            ],
+            "width": 347,
+            "height": 183,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [],
+            "text": "These tests check if flow execution works without edges"
+        },
+        {
+            "id": 2047515370984,
+            "title": "Test no connection 1",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                205,
+                0
+            ],
+            "position": [
+                85.140625,
+                1926.272472381592
+            ],
+            "width": 347,
+            "height": 252,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047515371992,
+                    "type": "input",
+                    "position": [
+                        173.5,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047515372136,
+                    "type": "output",
+                    "position": [
+                        173.5,
+                        252.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "a = 1\r\na",
+            "stdout": ""
+        },
+        {
+            "id": 2047515582680,
+            "title": "Test input only 1",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                256,
+                0
+            ],
+            "position": [
+                -344.609375,
+                2168.522472381592
+            ],
+            "width": 304,
+            "height": 303,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047515583688,
+                    "type": "input",
+                    "position": [
+                        152.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047515583832,
+                    "type": "output",
+                    "position": [
+                        152.0,
+                        303.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "a = 1",
+            "stdout": ""
+        },
+        {
+            "id": 2047516568312,
+            "title": "Test input only 2",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                242,
+                0
+            ],
+            "position": [
+                -368.3593749999999,
+                2598.5224723815913
+            ],
+            "width": 350,
+            "height": 289,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047516569320,
+                    "type": "input",
+                    "position": [
+                        175.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047516569464,
+                    "type": "output",
+                    "position": [
+                        175.0,
+                        289.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "b = 2\r\na + b",
+            "stdout": ""
+        },
+        {
+            "id": 2047517406264,
+            "title": "Test output only 1",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                215,
+                0
+            ],
+            "position": [
+                85.640625,
+                2231.522472381592
+            ],
+            "width": 326,
+            "height": 262,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047517407272,
+                    "type": "input",
+                    "position": [
+                        163.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047517407416,
+                    "type": "output",
+                    "position": [
+                        163.0,
+                        262.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "a = 1",
+            "stdout": ""
+        },
+        {
+            "id": 2047520151448,
+            "title": "Test output only 2",
+            "block_type": "CodeBlock",
+            "splitter_pos": [
+                208,
+                0
+            ],
+            "position": [
+                104.89062500000011,
+                2603.022472381592
+            ],
+            "width": 300,
+            "height": 255,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [
+                {
+                    "id": 2047520152456,
+                    "type": "input",
+                    "position": [
+                        150.0,
+                        0.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                },
+                {
+                    "id": 2047520152600,
+                    "type": "output",
+                    "position": [
+                        150.0,
+                        255.0
+                    ],
+                    "metadata": {
+                        "color": "#FF55FFF0",
+                        "linecolor": "#FF000000",
+                        "linewidth": 1.0,
+                        "radius": 10.0
+                    }
+                }
+            ],
+            "source": "b = 2\r\na + b",
+            "stdout": ""
+        },
+        {
+            "id": 2047565442936,
+            "title": "Markdown",
+            "block_type": "MarkdownBlock",
+            "splitter_pos": [
+                0,
+                137
+            ],
+            "position": [
+                -370.39062500000006,
+                -378.5087776184082
+            ],
+            "width": 445,
+            "height": 184,
+            "metadata": {
+                "title_metadata": {
+                    "color": "white",
+                    "font": "Ubuntu",
+                    "size": 10
+                }
+            },
+            "sockets": [],
+            "text": "**Test flow tests the general behavior of flow execution:**\r\n\r\n\tExecuting 6 left should output 4\r\n\r\n\tExecuting 6 right should output 21 in block 8\r\n"
+        }
+    ],
+    "edges": [
+        {
+            "id": 2047510155912,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047515582680,
+                "socket": 2047515583832
+            },
+            "destination": {
+                "block": 2047516568312,
+                "socket": 2047516569320
+            }
+        },
+        {
+            "id": 2047514047112,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047509975832,
+                "socket": 2047509976984
+            },
+            "destination": {
+                "block": 2047510222024,
+                "socket": 2047510350296
+            }
+        },
+        {
+            "id": 2047515121560,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047510054808,
+                "socket": 2047510055960
+            },
+            "destination": {
+                "block": 2047510222024,
+                "socket": 2047510350296
+            }
+        },
+        {
+            "id": 2047515184584,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047510054808,
+                "socket": 2047510055960
+            },
+            "destination": {
+                "block": 2047510394344,
+                "socket": 2047510395352
+            }
+        },
+        {
+            "id": 2047515243864,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047510222024,
+                "socket": 2047510350440
+            },
+            "destination": {
+                "block": 2047380828024,
+                "socket": 2047509615672
+            }
+        },
+        {
+            "id": 2047515295464,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047380828024,
+                "socket": 2047509615816
+            },
+            "destination": {
+                "block": 2047510572632,
+                "socket": 2047510594184
+            }
+        },
+        {
+            "id": 2047515355896,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047510572632,
+                "socket": 2047510594328
+            },
+            "destination": {
+                "block": 2047511818888,
+                "socket": 2047511819896
+            }
+        },
+        {
+            "id": 2047515682712,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047511620200,
+                "socket": 2047511621352
+            },
+            "destination": {
+                "block": 2047511818888,
+                "socket": 2047511819896
+            }
+        },
+        {
+            "id": 2047521474312,
+            "path_type": "bezier",
+            "source": {
+                "block": 2047517406264,
+                "socket": 2047517407416
+            },
+            "destination": {
+                "block": 2047520151448,
+                "socket": 2047520152456
+            }
+        }
+    ]
+}

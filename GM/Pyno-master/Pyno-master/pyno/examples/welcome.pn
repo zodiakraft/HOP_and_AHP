@@ -1,0 +1,547 @@
+[
+    {
+        "version": 0.4
+    },
+    {
+        "type": "node",
+        "x": 557,
+        "y": 411,
+        "size": [
+            300,
+            150
+        ],
+        "color": [
+            100,
+            130,
+            117
+        ],
+        "code": [
+            "def add(a=0, b=0):",
+            "  result = a + b",
+            "  return result",
+            "",
+            "call = add"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 38,
+                    "put": {
+                        "name": "output"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "b"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 36,
+                    "put": {
+                        "name": "output"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "a"
+                    }
+                }
+            }
+        ],
+        "id": 35
+    },
+    {
+        "type": "field",
+        "x": 499,
+        "y": 520,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "5"
+        ],
+        "connects": [],
+        "id": 36
+    },
+    {
+        "type": "field",
+        "x": 202,
+        "y": 327,
+        "size": [
+            350,
+            496
+        ],
+        "code": [
+            "#",
+            "#         Welcome to Pyno!",
+            "#",
+            "#  Pyno is a visual programming env",
+            "# based on Python",
+            "#",
+            "#  You can find info and tutorials",
+            "# at https://github.com/honix/Pyno",
+            "#",
+            "#",
+            "#         Basic controls",
+            "#",
+            "# Create - Node   press N or O",
+            "#        - Field  press F",
+            "#        - Sub    press S",
+            "#",
+            "# Pan    - right-mouse-button drag",
+            "#",
+            "# Zoom   - mouse wheel",
+            "#",
+            "#    ____",
+            "#   |  _ \\ _   _  ____   ___",
+            "#   | (_) ) | | ||  _ \\ / _ \\",
+            "#   |  __/| |_| || | | | (_) )",
+            "#   |_|   \\___  ||_| |_|\\___/",
+            "#          (___/",
+            "#"
+        ],
+        "connects": [],
+        "id": 37
+    },
+    {
+        "type": "field",
+        "x": 618,
+        "y": 521,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "20"
+        ],
+        "connects": [],
+        "id": 38
+    },
+    {
+        "type": "field",
+        "x": 481,
+        "y": 291,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "25"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 35,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 39
+    },
+    {
+        "type": "node",
+        "x": 640,
+        "y": 286,
+        "size": [
+            300,
+            150
+        ],
+        "color": [
+            116,
+            127,
+            128
+        ],
+        "code": [
+            "def devide(a=0, b=1):",
+            "  result = a // b",
+            "  return result",
+            "",
+            "call = devide"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 41,
+                    "put": {
+                        "name": "output"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "b"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 35,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "a"
+                    }
+                }
+            }
+        ],
+        "id": 40
+    },
+    {
+        "type": "field",
+        "x": 696,
+        "y": 409,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "5"
+        ],
+        "connects": [],
+        "id": 41
+    },
+    {
+        "type": "field",
+        "x": 640,
+        "y": 168,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "5"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 40,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 42
+    },
+    {
+        "type": "field",
+        "x": 1038,
+        "y": 485,
+        "size": [
+            170,
+            30
+        ],
+        "code": [
+            "lambda x: x - 5"
+        ],
+        "connects": [],
+        "id": 43
+    },
+    {
+        "type": "field",
+        "x": 1336,
+        "y": 481,
+        "size": [
+            129,
+            30
+        ],
+        "code": [
+            "range(1,10)"
+        ],
+        "connects": [],
+        "id": 44
+    },
+    {
+        "type": "node",
+        "x": 1193,
+        "y": 343,
+        "size": [
+            300,
+            150
+        ],
+        "color": [
+            84,
+            114,
+            81
+        ],
+        "code": [
+            "def outOfFunction(a=None, b=()):",
+            "    result = tuple(map(a,b))",
+            "    return result",
+            "",
+            "call = outOfFunction"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 44,
+                    "put": {
+                        "name": "output"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "b"
+                    }
+                }
+            },
+            {
+                "output": {
+                    "node": 43,
+                    "put": {
+                        "name": "output"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "a"
+                    }
+                }
+            }
+        ],
+        "id": 45
+    },
+    {
+        "type": "field",
+        "x": 1159,
+        "y": 246,
+        "size": [
+            328,
+            30
+        ],
+        "code": [
+            "(-4, -3, -2, -1, 0, 1, 2, 3, 4)"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 45,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 46
+    },
+    {
+        "type": "node",
+        "x": 842,
+        "y": 155,
+        "size": [
+            300,
+            219
+        ],
+        "color": [
+            126,
+            120,
+            86
+        ],
+        "code": [
+            "S['timer'] = 0",
+            "",
+            "def timeSinus():",
+            "  import math",
+            "",
+            "  S['timer'] += G['dt']",
+            "  result = math.sin(S['timer'])",
+            "  return result",
+            "",
+            "call = timeSinus",
+            ""
+        ],
+        "connects": [],
+        "id": 47
+    },
+    {
+        "type": "field",
+        "x": 890,
+        "y": 43,
+        "size": [
+            224,
+            30
+        ],
+        "code": [
+            "0.07546959274639231"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 47,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 48
+    },
+    {
+        "type": "field",
+        "x": 1664,
+        "y": 293,
+        "size": [
+            326,
+            52
+        ],
+        "code": [
+            "# Check examples folder for more"
+        ],
+        "connects": [],
+        "id": 49
+    },
+    {
+        "type": "node",
+        "x": 1674,
+        "y": 506,
+        "size": [
+            300,
+            150
+        ],
+        "color": [
+            121,
+            91,
+            120
+        ],
+        "code": [
+            "call = lambda x: x"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 51,
+                    "put": {
+                        "name": "output"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "x"
+                    }
+                }
+            }
+        ],
+        "id": 50
+    },
+    {
+        "type": "field",
+        "x": 1662,
+        "y": 584,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "None",
+            ""
+        ],
+        "connects": [],
+        "id": 51
+    },
+    {
+        "type": "field",
+        "x": 1657,
+        "y": 427,
+        "size": [
+            70,
+            30
+        ],
+        "code": [
+            "None"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 50,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 52
+    },
+    {
+        "type": "node",
+        "x": 1119,
+        "y": 159,
+        "size": [
+            300,
+            150
+        ],
+        "color": [
+            92,
+            113,
+            125
+        ],
+        "code": [
+            "path = 'pyno/nodes/timeSinus.py'",
+            "",
+            "with open(path) as file:",
+            "  exec(file.read())",
+            ""
+        ],
+        "connects": [],
+        "id": 53
+    },
+    {
+        "type": "field",
+        "x": 1170,
+        "y": 46,
+        "size": [
+            218,
+            30
+        ],
+        "code": [
+            "0.07546959274639231"
+        ],
+        "connects": [
+            {
+                "output": {
+                    "node": 53,
+                    "put": {
+                        "name": "result"
+                    }
+                },
+                "input": {
+                    "put": {
+                        "name": "input"
+                    }
+                }
+            }
+        ],
+        "id": 54
+    }
+]
