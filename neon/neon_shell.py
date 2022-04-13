@@ -99,7 +99,7 @@ from colorama import Fore, Back, Style
 
 import neon
 
-print(compiling('''genome Hat():
+print(neon.compiling('''genome Hat():
     def __init__(self, donor):
         recipient
     def injection():
