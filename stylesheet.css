@@ -97,6 +97,7 @@ body {
   background: transparent;
   color: #8a8a8a;
   word-wrap: break-word;
+  float: left;
 }
 
 .content {
@@ -115,13 +116,14 @@ body {
   margin: 0;
 }
 
-.content__animate {
+.try {
   float: left;
 }
 
 .content__container__list {
   padding: 0;
   display: inline-block;
+  float: left;
   margin-top: 0;
   text-align: left;
   list-style: none;
@@ -134,8 +136,8 @@ body {
 }
 
 .content__container__list__item {
-  line-height: 40px;
   margin: 0;
+  height: 42px;
 }
 
 @-webkit-keyframes change {
