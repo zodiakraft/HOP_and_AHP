@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Candal&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap');
+* {
+	box-sizing: border-box;
+	margin: 0;
+  	padding: 0;
+}
+
+body {
+	background: url(img/fon2.jpg);
+	background-size: 100%;
+	margin: 0;
+}
+p {
+	cursor: default;
+}
+a {
+	text-decoration: none;
+	cursor: pointer;
+}
+.li {
+	font-size: 1rem;
+}
+around {
+	background-color: #1E90FF;
+}
+.menu {
+	display: flex;
+	font-family: 'Comfortaa', cursive;
+	font-size: 1.2rem;
+}
+.menu li {
+	width: 200px;
+	list-style: none;
+	background-color: #1E90FF;
+	position: relative;
+}
+.menu a {
+	color: #fff;
+	display: block;
+	padding: 0 10px;
+	height: 40px;
+	line-height: 40px;
+	transition: all 500ms;
+	text-decoration: none;
+}
+.menu a:hover {
+	background-color: #2d88e3;
+	text-decoration: none;
+	color: white;
+}
+.menu ul {
+	position: absolute;
+	right: 0%;
+	top: 100%;
+	display: none;
+}
+.menu li:hover ul{
+	display: block;
+}
+.menu-container {
+	display: inline-block;
+	width: 20%;
+	text-align: center;
+	height: 40px;
+	float: left;
+}
+
+.back {
+	font-size: 1.2rem;
+	width: 10%;
+	display: inline-block;
+	float: left;
+	color: white;
+	font-family: 'Comfortaa', cursive;
+	transition: 200ms;
+	height: 40px;
+	line-height: 40px;
+}
+.back:hover {
+	background-color: #2d88e3;
+	transform: 500ms;
+}
+.back a {
+	text-decoration: none;
+	color: white;
+}
+.back a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.img-head {
+	width: 100%;
+}
+.head-img {
+	margin: 0;
+	padding: 0;
+	background: url(img/headpic3.png);
+	background-size: 100%;
+	display: inline-block;
+	height: 80px;
+}
+.header {
+	width: 100%;
+	background-color: #1E90FF;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.header-text {
+	color: white;
+	font-size: 1rem;
+}
+.title {
+	color: white;
+	font-family: 'Prompt', sans-serif;
+	font-size: 2rem;
+	text-align: left;
+	width: 10%;
+	float: left;
+	margin-top: 0.6%;
+}
+.blue-line {
+	width: 100%;
+	height: 30px;
+	background-color: #1E90FF;
+	text-align: left;
+	color: white;
+	font-size: 1.2rem;
+	font-family: 'Prompt', sans-serif;
+}
+.blue-line-first {
+	width: 100%;
+	height: 30px;
+	background-color: #1E90FF;
+	text-align: left;
+	color: white;
+	font-size: 1.2rem;
+	font-family: 'Prompt', sans-serif;
+}
+.blue-line-a {
+	text-decoration: none;
+	color: white;
+}
+.blue-line-a:hover {
+	text-decoration: none;
+	color: white;
+}
+.content-container {
+	width: 100%;
+	float: left;
+}
+.versions-text {
+	padding: .3rem .5rem;
+	text-align: center;
+	transform-style: 100ms;
+}
+.versions-text:hover {
+	background-color: #2b2b2b;
+	transition: 500ms;
+}
+.nav-2 {
+	width: 20%;
+	margin-left: 3px;
+	display: inline-block;
+	background-color: #0f0f0f;
+	text-align: center;
+	float: right;
+	margin-top: 50px;
+	color: white;
+	font-size: .9rem;
+}
+.nav-2 a {
+	text-decoration: none;
+	color: white;
+	transition: 200ms;
+}
+.nav-2 a:hover {
+	text-decoration: none;
+	color: white;
+	transition: 600ms;
+	background-color: #2b2b2b;
+}
+.nav-2-text {
+	padding: .3rem;
+	transition: 200ms;
+}
+.nav-2-text:hover {
+	background-color: #2b2b2b;
+	transition: 500ms;
+}
+.nav-1 {
+	width: 20%;
+	margin-left: 3px;
+	display: inline-block;
+	background-color: #0f0f0f;
+	text-align: center;
+	float: right;
+	color: white;
+	font-size: .9rem;
+}
+.nav-1 a {
+	text-decoration: none;
+	color: white;
+}
+.nav-1 a:hover {
+	text-decoration: none;
+	color: white;
+}
+.content {
+	width: 79%;
+	display: inline-block;
+	float: left;
+}
+.modpack-content {
+	background-color: #0f0f0f;
+	margin-bottom: 20px;
+}
+.modpack-text {
+	color: white;
+	font-size: .9rem;
+	text-align: center;
+	padding-bottom: 1rem;
+	margin-top: 1%;
+}
+.about {
+	font-size: 1.3rem;
+	margin: 2% 5%;
+	font-family: 'Ubuntu Condensed', sans-serif;
+}
+.about-1{
+	margin: 0 1%;;
+}
+.modpack-text-1 {
+	margin: 0 auto;
+	width: 80%;
+}
+.version-pack {
+	margin-left: 1%;
+	cursor: pointer;
+}
+.img-container {
+	width: 100%;
+	text-align: center;
+}
+.img {
+	width: 70%;
+}
+.footer {
+	width: 79%;
+	background-color: #0f0f0f;
+	display: inline-block;
+	float: left;
+	color: white;
+	font-size: .8rem;
+	text-align: center;
+}
+.footer-container {
+	width: 100%;
+}
+.footer-img-container {
+	display: inline-block;
+	width: 49%;
+	float: left;
+	text-align: left;
+}
+.footer-img {
+	width: 60%;
+	margin: 4%;
+}
+.footer-2022 {
+	width: 49%;
+	float: right;
+	text-align: right;
+	color: #6cc8f0;
+	font-size: 2rem;
+	font-family: 'Candal', sans-serif;
+}
+.footer-text-1 {
+	margin: 4%;
+}
+.switch-container {
+	display: inline-block;
+	width: 79%;
+	float: left;
+}
+.switch-container-1 {
+	display: inline-block;
+	width: 100%;
+	float: left;
+}
+.switch	{	
+	width: 79%;
+	display: inline-block;
+	text-align: center;
+	font-size: 1rem;
+	background-color: #0f0f0f;
+}
+.switch-1	{	
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+	font-size: 1rem;
+	background-color: #0f0f0f;
+}
+.switch-text {
+	margin-top: 1%;
+	border-radius: .3rem;
+	padding: .2rem .5rem;
+	margin-left: .3rem;
+	color: white;
+	display: inline-block;
+	background-color: #1E90FF;
+	transition: 200ms;
+}
+.switch-text:hover {
+	background-color: #0f0f0f;
+	transition: 500ms;
+}
+.main {
+	background-color: white;
+	color: black;
+}
+.up {
+	margin-top: 7%;
+}
+@media screen and (max-width: 990px) {
+	.blue-line-first {
+	width: 100%;
+	height: 40px;
+	background-color: #1E90FF;
+	text-align: left;
+	color: white;
+	font-size: 1.2rem;
+	font-family: 'Prompt', sans-serif;
+}
+.head-img {
+	height: 69px;
+}
+.modpack-text {
+	font-size: .8rem;
+}
+.nav-1 {
+	font-size: .8rem;
+
+}
+
+.nav-2 {
+	font-size: .7rem;
+}
+.blue-line {
+	font-size: 1rem;
+}
+.blue-line-first {
+	font-size: 1rem;
+}
+}
+@media screen and (max-width: 770px) {
+	.blue-line-first {
+	width: 100%;
+	height: 40px;
+	background-color: #1E90FF;
+	text-align: left;
+	color: white;
+	font-size: .8rem;
+	font-family: 'Prompt', sans-serif;
+}
+.head-img {
+	height: 40px;
+}
+.nav-2 {
+	font-size: .7rem;
+}
+.modpack-text {
+	font-size: .6rem;
+}
+}
+@media screen and (max-width: 990px){
+.footer-2022 {
+	font-size: 1.5rem;
+}
+}
+@media screen and (max-width: 770px){
+.footer-2022 {
+	font-size: 1rem;
+}
+}
