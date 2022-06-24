@@ -1,21 +1,26 @@
 import os
-import time
 from os.path import abspath
+import time
 import sys
 import math
 from random import randint
 
 import pygame
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtGui import QIcon, QFont,  QWindow,  QKeySequence, QImage, QPainter, QCursor
+
+from PyQt5 import (QtWidgets, QtCore, QtGui)
+from PyQt5.QtGui import (QIcon, QFont,  QWindow,  QKeySequence, QImage,
+                         QPainter, QCursor)
 from PyQt5.Qt import Qt
 from PyQt5.QtWidgets import (QWidget, QMenuBar, QTextBrowser, QTextEdit,
-QMessageBox, QApplication, QAction, QMainWindow, QPushButton, QDesktopWidget,
-QGridLayout, QFileDialog, QListWidget, QSpacerItem, QSizePolicy, QTableWidget,
-QLineEdit, QLabel, QDoubleSpinBox, QAbstractItemView, QStatusBar, QMenu,
-QMessageBox, QTabWidget, QTreeWidget, QTreeWidgetItem, QFrame, QScrollArea,
-QToolButton, QVBoxLayout)
-from PyQt5.QtCore import QCoreApplication, QSize, QTimer, QPoint
+                             QMessageBox, QApplication, QAction, QMainWindow,
+                             QPushButton, QDesktopWidget, QGridLayout,
+                             QFileDialog, QListWidget, QSpacerItem,
+                             QSizePolicy, QTableWidget, QLineEdit, QLabel,
+                             QDoubleSpinBox, QAbstractItemView, QStatusBar,
+                             QMenu, QMessageBox, QTabWidget, QTreeWidget,
+                             QTreeWidgetItem, QFrame, QScrollArea, QToolButton,
+                             QVBoxLayout)
+from PyQt5.QtCore import (QCoreApplication, QSize, QTimer, QPoint)
 
 import win32api
 import win32con
@@ -46,7 +51,7 @@ class Game():
         # для этого возьмем текущее окно, которое получили в hwnd = pygame.display.get_wm_info()["window"]
         # указываем параметры для того, чтобы скрыть иконки
         win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)| win32con.WS_EX_TOOLWINDOW)
- 
+    
     def loop(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -117,7 +122,7 @@ class Expander(QWidget):
         super().setLayout(self.mainLayout)
 
         def start_animation(checked):
-            arrow_type = 'ᐁ ' + title if checked else 'ᐅ ' + title   
+            arrow_type = f'ᐁ {title}' if checked else f'ᐅ {title}'
             direction = QtCore.QAbstractAnimation.Forward if checked else QtCore.QAbstractAnimation.Backward
             toggleButton.setText(arrow_type)
             self.toggleAnimation.setDirection(direction)
