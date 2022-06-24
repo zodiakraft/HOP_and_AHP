@@ -78,7 +78,7 @@ class coloring(drawing):
                 else: self.color_draw += i
 
 
-a = drawing(wheel =2, glass = 2)
-# print(a.draw)
-b = coloring(element='kuzov')
+a = drawing(wheel = 2, glass = 2)
+print(a.draw)
+b = coloring(element='wheel')
 print(b.color_draw)
